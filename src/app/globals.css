@@ -1,0 +1,86 @@
+@import "tailwindcss";
+
+@theme {
+  /* fonts */
+  --font-roboto: "Roboto", sans-serif;
+  /* Primary color */
+  --color-primary-50: #f5f0ff;
+  --color-primary-100: #e6d6ff;
+  --color-primary-200: #d0b0ff;
+  --color-primary-300: #b388ff;
+  --color-primary-400: #9d50ff;
+  --color-primary-500: #6a00f4;
+  --color-primary-600: #5a00d1;
+  --color-primary-700: #4a00a8;
+  --color-primary-800: #3a0080;
+  --color-primary-900: #2a0058;
+
+  /* Secondary color */
+  --color-secondary-100: #e0f7ff;
+  --color-secondary-200: #80ebff;
+  --color-secondary-300: #00d4ff;
+  --color-secondary-400: #00a8cc;
+  --color-secondary-500: #007a99;
+
+  /* accent */
+  --color-accent-100: #ffe6f5;
+  --color-accent-200: #ff99d6;
+  --color-accent-300: #ff4db8;
+  --color-accent-400: #e6007a;
+  --color-accent-500: #c00062;
+  /* gradient */
+  --artrum-gradient-100: linear-gradient(135deg, rgba(106, 0, 244, 0.1) 0%, rgba(0, 212, 255, 0.1) 100%);
+  --artrum-gradient-200: linear-gradient(135deg, rgba(106, 0, 244, 0.3) 0%, rgba(0, 212, 255, 0.3) 100%);
+  --artrum-gradient-300: linear-gradient(135deg, rgba(106, 0, 244, 0.5) 0%, rgba(0, 212, 255, 0.5) 100%);
+  --artrum-gradient-400: linear-gradient(135deg, #6a00f4 0%, #00d4ff 100%);
+  --artrum-gradient-500: linear-gradient(135deg, #5a00d1 0%, #00a8cc 100%);
+}
+
+@utility artrum-gradient-100 {
+  background: var(--artrum-gradient-100);
+}
+
+@utility artrum-gradient-200 {
+  background: var(--artrum-gradient-200);
+}
+
+@utility artrum-gradient-300 {
+  background: var(--artrum-gradient-300);
+}
+
+@utility artrum-gradient-400 {
+  background: var(--artrum-gradient-400);
+}
+
+@utility artrum-gradient-500 {
+  background: var(--artrum-gradient-500);
+}
+
+@layer base {
+  .border-app-dashed {
+    @apply border-dashed border-gray-500;
+  }
+
+  body {
+    @apply bg-gray-900 font-roboto text-primary-50
+  }
+
+  section {
+    @apply not-[.base]:pt-[100px] not-[.base]:pb-[100px]
+  }
+
+  .container {
+    @apply mx-auto px-2.5 border-dashed border-gray-500 not-[.base]:border-l not-[.base]:border-r
+  }
+
+  :focus {
+    @apply focus:outline-none focus:ring-2 focus:ring-primary-400 focus:border-transparent
+  }
+  :focus-visible {
+    @apply focus-visible:outline-dashed focus-visible:outline-primary-400 focus-visible:outline-offset-[7px] focus-visible:outline-2
+  }
+
+  button {
+    @apply cursor-pointer
+  }
+}

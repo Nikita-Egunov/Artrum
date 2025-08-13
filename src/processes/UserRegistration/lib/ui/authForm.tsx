@@ -1,0 +1,143 @@
+"use client"
+import { Notif } from "@/shared/components";
+import { useValidate } from "@/utils";
+import Link from "next/link";
+import { useState, useEffect } from "react";
+
+type Props = {
+  onSignUp?: boolean
+}
+
+export default function AuthForm({
+  onSignUp = false
+}: Props) {
+  const [agree, setAgree] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [respType, setRespType] = useState<"success" | "error">()
+  const [visible, setVisible] = useState(false)
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setAgree(e.target.checked);
+  }
+
+  const { onChange, onSubmit, onBlur } = useValidate()
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    onSubmit(e, setLoading, setRespType)
+  }
+
+  return (
+    <div className="max-w-md w-full mx-auto p-6 bg-primary-800/30 rounded-xl border border-primary-700">
+      <h1 className="text-3xl max-w-fit mx-auto font-bold bg-gradient-to-r from-accent-400 to-secondary-300 
+                     bg-clip-text text-transparent mb-8 text-center">
+        {onSignUp ? 'Регистрация' : 'Вход в аккаунт'}
+      </h1>
+
+      <form action={onSignUp ? '/api/sign-up/' : '/api/sign-in/'} noValidate className="space-y-6" onSubmit={handleSubmit}>
+        <div className="space-y-4">
+          <div>
+            <label className="block text-primary-100 text-sm mb-2">
+              Email
+              <input
+                type="email"
+                className="w-full focus-visible:outline-none px-4 py-3 bg-primary-900 border border-primary-600 rounded-lg
+              focus:ring-2 focus:ring-accent-300 focus:border-transparent"
+                placeholder="your@email.com"
+                onChange={onChange}
+                onBlur={onBlur}
+                name="email"
+                required
+                autoComplete="email"
+              />
+              <span className="mt-[10px] hidden text-red-600"></span>
+            </label>
+          </div>
+
+          <div>
+            <label className="block text-primary-100 text-sm mb-2">
+              Пароль
+              <div className="relative">
+                <input
+                  type={visible ? "text" : "password"}
+                  className="w-full focus-visible:outline-none px-4 py-3 bg-primary-900 border border-primary-600 rounded-lg
+              focus:ring-2 focus:ring-accent-300 focus:border-transparent"
+                  placeholder="••••••••"
+                  onChange={onChange}
+                  onBlur={onBlur}
+                  name="password"
+                  required
+                  autoComplete={onSignUp ? "new-password webauthn" : "current-password webauthn"}
+                />
+                <div onClick={() => {
+                  setVisible(!visible)
+                }} className="p-[6px] flex items-center justify-center absolute top-1/2 -translate-y-1/2 z-10 right-[2%] cursor-pointer">
+                  {visible ?
+                    <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="#fff"><path d="M480-312q70 0 119-49t49-119q0-70-49-119t-119-49q-70 0-119 49t-49 119q0 70 49 119t119 49Zm0-72q-40 0-68-28t-28-68q0-40 28-68t68-28q40 0 68 28t28 68q0 40-28 68t-68 28Zm0 192q-142.6 0-259.8-78.5Q103-349 48-480q55-131 172.2-209.5Q337.4-768 480-768q142.6 0 259.8 78.5Q857-611 912-480q-55 131-172.2 209.5Q622.6-192 480-192Zm0-288Zm0 216q112 0 207-58t146-158q-51-100-146-158t-207-58q-112 0-207 58T127-480q51 100 146 158t207 58Z" /></svg>
+                    :
+                    <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="#fff"><path d="m637-425-62-62q4-38-23-65.5T487-576l-62-62q13-5 27-7.5t28-2.5q70 0 119 49t49 119q0 14-2.5 28t-8.5 27Zm133 133-52-52q36-28 65.5-61.5T833-480q-49-101-144.5-158.5T480-696q-26 0-51 3t-49 10l-58-58q38-15 77.5-21t80.5-6q143 0 261.5 77.5T912-480q-22 57-58.5 103.5T770-292Zm-2 202L638-220q-38 14-77.5 21t-80.5 7q-143 0-261.5-77.5T48-480q22-57 58-104t84-85L90-769l51-51 678 679-51 51ZM241-617q-35 28-65 61.5T127-480q49 101 144.5 158.5T480-264q26 0 51-3.5t50-9.5l-45-45q-14 5-28 7.5t-28 2.5q-70 0-119-49t-49-119q0-14 3.5-28t6.5-28l-81-81Zm287 89Zm-96 96Z" /></svg>
+                  }
+                </div>
+              </div>
+              <span className="mt-[10px] hidden text-red-600"></span>
+            </label>
+          </div>
+          {onSignUp &&
+            <div>
+              <label className="block text-primary-100 text-sm mb-2">
+                Подтвердите пароль
+                <input
+                  type={visible ? "text" : "password"}
+                  className="w-full focus-visible:outline-none px-4 py-3 bg-primary-900 border border-primary-600 rounded-lg
+                focus:ring-2 focus:ring-accent-300 focus:border-transparent"
+                  placeholder="••••••••"
+                  onChange={onChange}
+                  onBlur={onBlur}
+                  name="passwordConfirm"
+                  required
+                  autoComplete="new-password webauthn"
+                />
+                <span className="mt-[10px] hidden text-red-600"></span>
+              </label>
+            </div>
+          }
+        </div>
+
+        <div className="flex items-center justify-between text-sm">
+          {!onSignUp &&
+            <Link href="#" className="text-secondary-300 hover:text-secondary-400 transition-colors">
+              Забыли пароль?
+            </Link>
+          }
+        </div>
+
+        <button
+          type="submit"
+          className="w-full bg-secondary-300 text-white py-3 rounded-lg hover:bg-secondary-400 
+                   transition-colors flex justify-center items-center"
+        >
+          {onSignUp ? 'Зарегистрироваться' : 'Войти'}
+        </button>
+
+        <p className="text-center text-primary-200 text-sm mt-6">
+          {onSignUp ? 'Есть аккаунт?' : 'Нет аккаунта?'} {' '}
+          <Link href={onSignUp ? '/sign-in' : "/sign-up"} className="text-secondary-300 hover:text-secondary-400 transition-colors">
+            {onSignUp ? 'Войти' : 'Зарегистрироваться'}
+          </Link>
+        </p>
+      </form>
+      {loading &&
+        <Notif
+          type={respType}
+          onClose={() => setLoading(false)}
+        >
+          {respType === 'success' ? `Успешно. Вы будите перенаправлены в ваш профиль` : 'Ошибка'}
+        </Notif>
+      }
+    </div>
+  )
+}
