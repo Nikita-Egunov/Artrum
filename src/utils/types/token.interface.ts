@@ -1,0 +1,1 @@
+export interface Token { userEmail: string, type: "access" | "refresh" } 

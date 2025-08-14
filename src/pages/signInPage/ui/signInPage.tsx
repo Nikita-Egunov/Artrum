@@ -1,4 +1,4 @@
-import { SignIn } from "@/processes";
+import { SignIn } from "@/features";
 
 export default function SignInPage() {
   return (

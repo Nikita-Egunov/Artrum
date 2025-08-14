@@ -47,13 +47,13 @@ export async function POST(req: Request) {
     if (!process.env.JWT_SECRET) { return new Response("Server error", { status: 500 }); }
 
     const token = jwt.sign(
-      { userId: user.email, type: 'access' },
+      { userEmail: user.email, type: 'access' },
       process.env.JWT_SECRET,
       { algorithm: 'HS256' },
     )
 
     const refreshToken = jwt.sign(
-      { userId: user.email, type: 'refresh' },
+      { userEmail: user.email, type: 'refresh' },
       process.env.JWT_SECRET,
       {
         algorithm: 'HS256',

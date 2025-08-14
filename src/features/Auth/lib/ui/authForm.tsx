@@ -31,6 +31,16 @@ export default function AuthForm({
     onSubmit(e, setLoading, setRespType)
   }
 
+  useEffect(() => {
+    if (loading) {
+      if (respType === 'success') {
+        setTimeout(() => {
+          window.location.replace('/profile')
+        }, 4000)
+      }
+    }
+  }, [loading])
+
   return (
     <div className="max-w-md w-full mx-auto p-6 bg-primary-800/30 rounded-xl border border-primary-700">
       <h1 className="text-3xl max-w-fit mx-auto font-bold bg-gradient-to-r from-accent-400 to-secondary-300 
@@ -135,7 +145,7 @@ export default function AuthForm({
           type={respType}
           onClose={() => setLoading(false)}
         >
-          {respType === 'success' ? `Успешно. Вы будите перенаправлены в ваш профиль` : 'Ошибка'}
+          {respType === 'success' ? `Успешно. Вы будите перенаправлены в ваш профиль` : 'Ошибка входа. Попробуйте ещё раз'}
         </Notif>
       }
     </div>
