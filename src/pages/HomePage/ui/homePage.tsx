@@ -15,12 +15,48 @@ export default function HomePage() {
       <Slider
         title="Доступные для покупки арты"
         cards={[
-          { buttonUrl: '/', description: 'id этого арта: 777', imageUrl: '/nft.jpg', price: '99$', title: 'Title' },
-          { buttonUrl: '/', description: 'id этого арта: 777', imageUrl: '/nft.jpg', price: '99$', title: 'Title' },
-          { buttonUrl: '/', description: 'id этого арта: 777', imageUrl: '/nft.jpg', price: '99$', title: 'Title' },
-          { buttonUrl: '/', description: 'id этого арта: 777', imageUrl: '/nft.jpg', price: '99$', title: 'Title' },
-          { buttonUrl: '/', description: 'id этого арта: 777', imageUrl: '/nft.jpg', price: '99$', title: 'Title' },
-          { buttonUrl: '/', description: 'id этого арта: 777', imageUrl: '/nft.jpg', price: '99$', title: 'Title' },
+          {
+            buttonUrl: "/",
+            description: "id этого арта: 777",
+            imageUrl: "/nft.jpg",
+            price: "99$",
+            title: "Title",
+          },
+          {
+            buttonUrl: "/",
+            description: "id этого арта: 777",
+            imageUrl: "/nft.jpg",
+            price: "99$",
+            title: "Title",
+          },
+          {
+            buttonUrl: "/",
+            description: "id этого арта: 777",
+            imageUrl: "/nft.jpg",
+            price: "99$",
+            title: "Title",
+          },
+          {
+            buttonUrl: "/",
+            description: "id этого арта: 777",
+            imageUrl: "/nft.jpg",
+            price: "99$",
+            title: "Title",
+          },
+          {
+            buttonUrl: "/",
+            description: "id этого арта: 777",
+            imageUrl: "/nft.jpg",
+            price: "99$",
+            title: "Title",
+          },
+          {
+            buttonUrl: "/",
+            description: "id этого арта: 777",
+            imageUrl: "/nft.jpg",
+            price: "99$",
+            title: "Title",
+          },
         ]}
       />
       <About
@@ -39,12 +75,48 @@ export default function HomePage() {
         <Slider
           title="Редкие арты"
           cards={[
-            { buttonUrl: '/', description: 'id этого арта: 777', imageUrl: '/nft.jpg', price: '99$', title: 'Title' },
-            { buttonUrl: '/', description: 'id этого арта: 777', imageUrl: '/nft.jpg', price: '99$', title: 'Title' },
-            { buttonUrl: '/', description: 'id этого арта: 777', imageUrl: '/nft.jpg', price: '99$', title: 'Title' },
-            { buttonUrl: '/', description: 'id этого арта: 777', imageUrl: '/nft.jpg', price: '99$', title: 'Title' },
-            { buttonUrl: '/', description: 'id этого арта: 777', imageUrl: '/nft.jpg', price: '99$', title: 'Title' },
-            { buttonUrl: '/', description: 'id этого арта: 777', imageUrl: '/nft.jpg', price: '99$', title: 'Title' },
+            {
+              buttonUrl: "/",
+              description: "id этого арта: 777",
+              imageUrl: "/nft.jpg",
+              price: "99$",
+              title: "Title",
+            },
+            {
+              buttonUrl: "/",
+              description: "id этого арта: 777",
+              imageUrl: "/nft.jpg",
+              price: "99$",
+              title: "Title",
+            },
+            {
+              buttonUrl: "/",
+              description: "id этого арта: 777",
+              imageUrl: "/nft.jpg",
+              price: "99$",
+              title: "Title",
+            },
+            {
+              buttonUrl: "/",
+              description: "id этого арта: 777",
+              imageUrl: "/nft.jpg",
+              price: "99$",
+              title: "Title",
+            },
+            {
+              buttonUrl: "/",
+              description: "id этого арта: 777",
+              imageUrl: "/nft.jpg",
+              price: "99$",
+              title: "Title",
+            },
+            {
+              buttonUrl: "/",
+              description: "id этого арта: 777",
+              imageUrl: "/nft.jpg",
+              price: "99$",
+              title: "Title",
+            },
           ]}
         />
 
@@ -59,5 +131,5 @@ export default function HomePage() {
       </div>
       <Footer />
     </>
-  )
+  );
 }

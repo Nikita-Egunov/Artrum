@@ -5,9 +5,9 @@ import { getProfile } from "@/utils";
 
 export default async function Header() {
   const cookieStore = await cookies();
-  const token = cookieStore.get('token')?.value;
+  const token = cookieStore.get("token")?.value;
 
-  const user = await getProfile(token)
+  const user = await getProfile(token);
 
   return (
     <header className="z-40 artrum-gradient-300 py-4 shadow-lg absolute top-0 left-0 w-full">
@@ -19,8 +19,11 @@ export default async function Header() {
           Artrum
         </Link>
         <div className="flex items-center gap-4">
-          <Link href={'/profile'} className="border-4 border-accent-400 text-accent-400 px-6 py-2 rounded-full hover:bg-accent-400 hover:text-white transition-colors">
-            {user ? 'Профиль' : 'Войти'}
+          <Link
+            href={"/profile"}
+            className="border-4 border-accent-400 text-accent-400 px-6 py-2 rounded-full hover:bg-accent-400 hover:text-white transition-colors"
+          >
+            {user ? "Профиль" : "Войти"}
           </Link>
         </div>
       </nav>

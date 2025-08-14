@@ -4,8 +4,8 @@ import { Header } from "./Header";
 import { Hero } from "./Hero";
 import { Slider } from "./Slider";
 
-export { Header }
-export { Hero }
-export { Slider }
-export { About }
-export { Footer }
+export { Header };
+export { Hero };
+export { Slider };
+export { About };
+export { Footer };

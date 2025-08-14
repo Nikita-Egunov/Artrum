@@ -1,5 +1,5 @@
-import { Token } from '@/shared';
-import * as jwt from 'jsonwebtoken';
+import { Token } from "@/shared";
+import * as jwt from "jsonwebtoken";
 
 export async function isVerified(token: string | undefined): Promise<boolean> {
   try {
@@ -18,7 +18,7 @@ export async function isVerified(token: string | undefined): Promise<boolean> {
     const decoded = jwt.decode(token) as Token;
 
     // 4. Проверка типа токена
-    if (decoded.type !== 'access') {
+    if (decoded.type !== "access") {
       return false;
     }
 
@@ -29,7 +29,6 @@ export async function isVerified(token: string | undefined): Promise<boolean> {
 
     // Если все проверки пройдены
     return true;
-
   } catch (error) {
     // Любая ошибка = пользователь не верифицирован
     return false;

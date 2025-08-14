@@ -1,3 +1,3 @@
 import About from "./ui/about";
 
-export { About }
+export { About };

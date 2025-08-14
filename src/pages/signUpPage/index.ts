@@ -1,3 +1,3 @@
 import { SignInPage } from "../signInPage";
 
-export { SignInPage }
+export { SignInPage };

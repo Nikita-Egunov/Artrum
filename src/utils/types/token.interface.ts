@@ -1,1 +1,4 @@
-export interface Token { userEmail: string, type: "access" | "refresh" } 
+export interface Token {
+  userEmail: string;
+  type: "access" | "refresh";
+}

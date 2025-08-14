@@ -1,3 +1,3 @@
 import { SignIn, SignUp } from "./Auth";
 
-export { SignIn, SignUp } 
+export { SignIn, SignUp };

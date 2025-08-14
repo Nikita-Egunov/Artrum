@@ -1,3 +1,3 @@
 import { Notif } from "./notif";
 
-export { Notif }
+export { Notif };

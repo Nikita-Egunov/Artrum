@@ -5,8 +5,10 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Brand Info */}
           <div className="space-y-4">
-            <h3 className="text-2xl font-bold bgp-gradient-to-r from-accent-400 to-secondary-300 
-                          bg-clip-text text-transparent">
+            <h3
+              className="text-2xl font-bold bgp-gradient-to-r from-accent-400 to-secondary-300 
+                          bg-clip-text text-transparent"
+            >
               Artrum
             </h3>
             <p className="text-primary-100 text-sm">
@@ -18,18 +20,50 @@ export default function Footer() {
           <div className="space-y-2">
             <h4 className="text-primary-50 font-semibold mb-3">Магазин</h4>
             <nav className="flex flex-col space-y-2">
-              <a href="/products" className="text-primary-100 hover:text-secondary-300 transition-colors">Все товары</a>
-              <a href="/new" className="text-primary-100 hover:text-secondary-300 transition-colors">Новинки</a>
-              <a href="/sale" className="text-primary-100 hover:text-secondary-300 transition-colors">Распродажа</a>
+              <a
+                href="/products"
+                className="text-primary-100 hover:text-secondary-300 transition-colors"
+              >
+                Все товары
+              </a>
+              <a
+                href="/new"
+                className="text-primary-100 hover:text-secondary-300 transition-colors"
+              >
+                Новинки
+              </a>
+              <a
+                href="/sale"
+                className="text-primary-100 hover:text-secondary-300 transition-colors"
+              >
+                Распродажа
+              </a>
             </nav>
           </div>
           {/* Legal */}
           <div className="space-y-2">
-            <h4 className="text-primary-50 font-semibold mb-3">Правовая информация</h4>
+            <h4 className="text-primary-50 font-semibold mb-3">
+              Правовая информация
+            </h4>
             <nav className="flex flex-col space-y-2">
-              <a href="/privacy" className="text-primary-100 hover:text-secondary-300 transition-colors">Конфиденциальность</a>
-              <a href="/terms" className="text-primary-100 hover:text-secondary-300 transition-colors">Условия использования</a>
-              <a href="/contacts" className="text-primary-100 hover:text-secondary-300 transition-colors">Контакты</a>
+              <a
+                href="/privacy"
+                className="text-primary-100 hover:text-secondary-300 transition-colors"
+              >
+                Конфиденциальность
+              </a>
+              <a
+                href="/terms"
+                className="text-primary-100 hover:text-secondary-300 transition-colors"
+              >
+                Условия использования
+              </a>
+              <a
+                href="/contacts"
+                className="text-primary-100 hover:text-secondary-300 transition-colors"
+              >
+                Контакты
+              </a>
             </nav>
           </div>
         </div>
@@ -39,5 +73,5 @@ export default function Footer() {
         </div>
       </div>
     </footer>
-  )
+  );
 }

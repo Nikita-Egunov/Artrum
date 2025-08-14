@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
-import 'swiper/css';
+import "swiper/css";
 import "./globals.css";
 import StoreProvider from "./StoreProvider";
 
@@ -8,7 +8,7 @@ const roboto = Roboto({
   variable: "--font-roboto",
   subsets: ["latin"],
   display: "swap",
-})
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -24,17 +24,9 @@ export default function RootLayout({
     <StoreProvider>
       <html lang="ru">
         <head>
-          <link
-            rel="icon.svg"
-            href="/icon"
-            type="image/svg+xml"
-          />
+          <link rel="icon.svg" href="/icon" type="image/svg+xml" />
         </head>
-        <body
-          className={`${roboto.variable}`}
-        >
-          {children}
-        </body>
+        <body className={`${roboto.variable}`}>{children}</body>
       </html>
     </StoreProvider>
   );
