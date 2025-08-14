@@ -10,9 +10,8 @@ describe('Page Component', () => {
     }).not.toThrow()
   })
 
-  it('should render the SignInPage component', () => {
+  it('should render the SignUpPage component', () => {
     render(<Page />)
-    const el = screen.getByTestId('sign-in-page')
-    expect(el).toBeInTheDocument()
+    expect(screen.getByTestId('sign-up-page')).toBeInTheDocument()
   })
 })

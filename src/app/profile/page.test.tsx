@@ -2,7 +2,6 @@
 import { render, screen } from '@testing-library/react'
 import Page from './page'
 
-
 describe('Page Component', () => {
   it('should render without errors', () => {
     expect(() => {
@@ -10,9 +9,8 @@ describe('Page Component', () => {
     }).not.toThrow()
   })
 
-  it('should render the SignInPage component', () => {
+  it('should render the ProfilePage component', () => {
     render(<Page />)
-    const el = screen.getByTestId('sign-in-page')
-    expect(el).toBeInTheDocument()
+    expect(screen.getByTestId('profile-page')).toBeInTheDocument()
   })
 })
