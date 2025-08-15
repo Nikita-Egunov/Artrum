@@ -1,7 +1,6 @@
 "use server";
 
 import { prisma, Token } from "@/shared";
-import { PrismaClient } from "@prisma/client";
 import * as jwt from "jsonwebtoken";
 
 export default async function getProfile(token: string | undefined) {

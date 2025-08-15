@@ -4,6 +4,8 @@ import * as jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
 
 export async function POST(req: Request) {
+  console.log("sign-in");
+
   const cookieStore = await cookies();
   try {
     const formData = await req.json();
@@ -76,7 +78,7 @@ export async function POST(req: Request) {
       httpOnly: true,
       maxAge: 60 * 60,
       sameSite: "lax",
-      secure: true,
+      // secure: true,
       path: "/",
     });
 
@@ -86,9 +88,13 @@ export async function POST(req: Request) {
       httpOnly: true,
       maxAge: 60 * 60 * 24 * 7,
       path: "/",
-      secure: true,
+      // secure: true,
       sameSite: "strict",
     });
+
+    console.log("token - ", cookieStore.get("token")?.value);
+    console.log("refreshToken - ", cookieStore.get("refreshToken")?.value);
+
 
     return Response.json({
       token,

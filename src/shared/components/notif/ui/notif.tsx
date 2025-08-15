@@ -33,7 +33,7 @@ export default function Notif({
   if (progress === 0) return null; // Не рендерим, если прогресс закончился
 
   return (
-    <div className="fixed bottom-4 right-4 z-50 animate-slideIn">
+    <div className="fixed bottom-4 right-1/2 translate-x-1/2 md:translate-x-0 md:right-4 z-50 animate-slideIn">
       <div
         className="bg-primary-800 border border-primary-700 rounded-lg p-4 
                      shadow-xl min-w-[300px] relative overflow-hidden"
