@@ -16,7 +16,7 @@ export default async function Header() {
     <header className="artrum-gradient-200 border-b border-app-dashed">
       <div className="container mx-auto px-6 py-6">
         <div className="lg:flex space-y-2.5 items-center justify-between">
-          <div className="flex items-center gap-4">
+          <Link href={'/'} className="flex items-center gap-4">
             <div className="relative">
               <div className="w-16 h-16 overflow-hidden relative rounded-full bg-primary-700 border-2 border-accent-300">
                 <Image className="w-full h-full" src={'/nft.jpg'} alt="Аватар" width={70} height={70} />
@@ -25,7 +25,7 @@ export default async function Header() {
             <div>
               <h1 className="text-lg md:text-2xl font-bold text-primary-50">{user?.name || user?.email}</h1>
             </div>
-          </div>
+          </Link>
 
           <div className="flex gap-4 justify-between">
             <div className="hidden md:block text-center">

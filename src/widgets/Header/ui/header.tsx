@@ -2,12 +2,16 @@
 import Link from "next/link";
 import { cookies } from "next/headers";
 import { getProfile } from "@/utils";
+import { User } from "@prisma/client";
 
 export default async function Header() {
   const cookieStore = await cookies();
   const token = cookieStore.get("token")?.value;
-
-  const user = await getProfile(token);
+  let user = null as User | null | undefined;
+  try {
+    user = await getProfile(token);
+  } catch (error) {
+  }
 
   return (
     <header className="z-40 artrum-gradient-300 py-4 shadow-lg absolute top-0 left-0 w-full">

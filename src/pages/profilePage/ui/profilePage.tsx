@@ -1,4 +1,4 @@
-import { Header } from "@/features";
+import { Header } from "@/features/profile";
 import { Slider } from "@/widgets";
 
 export default function ProfilePage() {

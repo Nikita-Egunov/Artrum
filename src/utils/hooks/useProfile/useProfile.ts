@@ -2,7 +2,9 @@
 import { useState, useEffect } from 'react';
 
 export default function useProfile() {
-  const [profile, setProfile] = useState(null);
+
+
+  const [profile, setProfile] = useState<{ name: string, email: string } | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -18,9 +20,14 @@ export default function useProfile() {
         });
 
         if (!response.ok) throw new Error('Failed to fetch profile');
-        
-        const data = await response.json();
-        setProfile(data);
+
+        const data = await response.json() as {
+          data: {
+            name: string
+            email: string
+          }
+        }
+        setProfile(data.data);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Unknown error');
       } finally {

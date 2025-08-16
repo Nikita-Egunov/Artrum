@@ -2,7 +2,7 @@
 
 export default function AvatarCustomize() {
   return (
-    <div className="max-w-xl w-full h-full max-h-[461px] p-6 bg-primary-800/40 rounded-xl border border-primary-700">
+    <div className="w-full p-6 bg-primary-800/40 rounded-xl border border-primary-700">
       <h2 className="text-2xl font-bold text-primary-50 mb-6">Настройка аватара</h2>
       
       <div className="border-2 border-dashed border-primary-600 rounded-xl p-8 text-center

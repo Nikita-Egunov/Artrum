@@ -18,7 +18,7 @@ export async function verifyAccessToken(req: NextRequest) {
   );
 
   if (!isAuthRoute) {
-    return { response: NextResponse.next(), userId: null };
+    return { response: NextResponse.next(), userEmail: null };
   }
 
   try {
@@ -37,13 +37,13 @@ export async function verifyAccessToken(req: NextRequest) {
       throw new Error("Invalid token type");
     }
 
-    // 2. Успешная проверка - добавляем userId в headers
+    // 2. Успешная проверка - добавляем useEmail в headers
     const requestHeaders = new Headers(req.headers);
-    requestHeaders.set("x-user-id", payload.userId as string);
+    requestHeaders.set("x-user-email", payload.userEmail as string);
 
     return {
       response: NextResponse.next({ request: { headers: requestHeaders } }),
-      userId: payload.userId as string,
+      userId: payload.userEmail as string,
     };
   } catch (error) {
     console.error("Access token verification failed:", error);
@@ -52,12 +52,15 @@ export async function verifyAccessToken(req: NextRequest) {
     if (refreshToken) {
       console.log('refreshToken');
 
-      return refreshAccess(req)
+      const refreshAccessResponse = await refreshAccess(req);
+      if (refreshAccessResponse) {
+        return refreshAccessResponse
+      }
     }
 
     // Перенаправление на страницу входа
     const loginUrl = new URL("/sign-in", req.url);
     loginUrl.searchParams.set("redirect", pathname);
-    return { response: NextResponse.redirect(loginUrl), userId: null };
+    return { response: NextResponse.redirect(loginUrl), userEmail: null };
   }
 }
