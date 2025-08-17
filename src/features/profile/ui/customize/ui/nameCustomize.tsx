@@ -29,7 +29,7 @@ export default function NameCustomize() {
       <div className="max-w-xl w-full p-6 bg-primary-800/40 rounded-xl border border-primary-700 space-y-8">
         <h2 className="text-2xl font-bold text-primary-50">Изменение данных аккаунта</h2>
 
-        <form className="space-y-6" onSubmit={(e) => {
+        <form noValidate className="space-y-6" onSubmit={(e) => {
           handleSubmit(e)
           setNotifOpen(true)
         }}>
@@ -75,7 +75,7 @@ export default function NameCustomize() {
             />
             <span></span>
           </div> */}
-          <PasswordInput labelTitle="Новый пароль" autoComplete="new-password webauthn" name="password" placeholder="Введите новый пароль" onChange={handleInputChange} />
+          <PasswordInput required={false} labelTitle="Новый пароль" autoComplete="new-password webauthn" name="password" placeholder="Введите новый пароль" onChange={handleInputChange} />
 
           <div className="flex gap-4 justify-end">
             <button className="border-2 border-secondary-300 text-secondary-300 px-6 py-2 

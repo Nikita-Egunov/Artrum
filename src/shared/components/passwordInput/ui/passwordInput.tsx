@@ -7,6 +7,7 @@ type Props = {
   name: string,
   placeholder: string
   labelTitle: string
+  required?: boolean
 }
 
 export default function PasswordInput({
@@ -15,7 +16,8 @@ export default function PasswordInput({
   autoComplete,
   name,
   placeholder,
-  labelTitle
+  labelTitle,
+  required = true
 }: Props) {
 
   const [visible, setVisible] = useState(false)
@@ -33,7 +35,7 @@ export default function PasswordInput({
         onChange={onChange}
         onBlur={onBlur}
         name={name}
-        required
+        required={required}
         autoComplete={
           autoComplete
         }
