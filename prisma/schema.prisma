@@ -1,6 +1,6 @@
 datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
+  provider = "postgresql"
+  url      = env("DATABASE_URL") // Подтянется из .env
 }
 
 generator client {
@@ -12,6 +12,6 @@ model User {
   email        String  @unique
   password     String
   refreshToken String
-  moneyWasted  Int @default(0)
+  moneyWasted  Int     @default(0)
   name         String?
 }
