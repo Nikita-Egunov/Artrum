@@ -2,35 +2,29 @@
 
 import { prisma, Token } from "@/shared";
 import * as jwt from "jsonwebtoken";
+import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
 
-export default async function getProfile(token: string | undefined) {
+export default async function getProfile(refreshToken: string | undefined) {
   try {
-    if (!token || !process.env.JWT_SECRET) {
-      throw new Error("Token is missing");
+    if (!process.env.JWT_SECRET) {
+      throw new Error("process.env.JWT_SECRET");
     }
-    const isValid = jwt.verify(token, process.env.JWT_SECRET);
 
-    if (!isValid) {
-      try {
-        const response = await fetch("/api/auth/refresh", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-      } catch (error) {
-        throw new Error("User is not logged in");
-      }
+    if (!refreshToken) {
+      throw new Error("!refreshToken");
     }
-    const decoded = jwt.decode(token) as Token;
+    const decoded = jwt.decode(refreshToken) as { userEmail: string; type: "refresh" };
 
-    if (decoded.type !== "access") {
-      throw new Error("!access type");
+    if (decoded.type !== "refresh") {
+      throw new Error("!refresh type");
     }
+
+    console.log(decoded);
 
     if (!decoded.userEmail) {
-      throw new Error("!userEmail");
+      throw new Error("!.userId");
     }
+
 
     const user = prisma.user.findUnique({
       where: {
@@ -43,5 +37,8 @@ export default async function getProfile(token: string | undefined) {
     }
 
     return user;
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+
+  }
 }

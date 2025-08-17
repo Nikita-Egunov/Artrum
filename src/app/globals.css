@@ -29,21 +29,15 @@
   --color-accent-400: #e6007a;
   --color-accent-500: #c00062;
   /* gradient */
-  --artrum-gradient-100: linear-gradient(
-    135deg,
-    rgba(106, 0, 244, 0.1) 0%,
-    rgba(0, 212, 255, 0.1) 100%
-  );
-  --artrum-gradient-200: linear-gradient(
-    135deg,
-    rgba(106, 0, 244, 0.3) 0%,
-    rgba(0, 212, 255, 0.3) 100%
-  );
-  --artrum-gradient-300: linear-gradient(
-    135deg,
-    rgba(106, 0, 244, 0.5) 0%,
-    rgba(0, 212, 255, 0.5) 100%
-  );
+  --artrum-gradient-100: linear-gradient(135deg,
+      rgba(106, 0, 244, 0.1) 0%,
+      rgba(0, 212, 255, 0.1) 100%);
+  --artrum-gradient-200: linear-gradient(135deg,
+      rgba(106, 0, 244, 0.3) 0%,
+      rgba(0, 212, 255, 0.3) 100%);
+  --artrum-gradient-300: linear-gradient(135deg,
+      rgba(106, 0, 244, 0.5) 0%,
+      rgba(0, 212, 255, 0.5) 100%);
   --artrum-gradient-400: linear-gradient(135deg, #6a00f4 0%, #00d4ff 100%);
   --artrum-gradient-500: linear-gradient(135deg, #5a00d1 0%, #00a8cc 100%);
 }
@@ -78,7 +72,7 @@
   }
 
   section {
-    @apply not-[.base]:pt-[100px] not-[.base]:pb-[100px];
+    @apply not-[.base]:py-[40px] md:not-[.base]:py-[100px];
   }
 
   .container {
@@ -88,6 +82,7 @@
   :focus {
     @apply focus:outline-none focus:ring-2 focus:ring-primary-400 focus:border-transparent;
   }
+
   :focus-visible {
     @apply focus-visible:outline-dashed focus-visible:outline-primary-400 focus-visible:outline-offset-[7px] focus-visible:outline-2;
   }

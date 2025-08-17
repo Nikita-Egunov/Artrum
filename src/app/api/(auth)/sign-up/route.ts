@@ -56,8 +56,23 @@ export async function POST(req: Request) {
       return new Response("Server error", { status: 500 });
     }
 
+    const refreshToken = jwt.sign(
+      { userEmail: formData.email, type: "refresh" },
+      process.env.JWT_SECRET,
+      {
+        algorithm: "HS256",
+        expiresIn: 60 * 60 * 24 * 7,
+      },
+    );
+    const newUser: User = await prisma.user.create({
+      data: {
+        email: formData.email,
+        password: formData.password,
+        refreshToken: refreshToken,
+      },
+    });
     const token = jwt.sign(
-      { userEmail: formData.email, type: "access" },
+      { userId: newUser.id, type: "access" },
       process.env.JWT_SECRET,
       { algorithm: "HS256" },
     );
@@ -68,26 +83,11 @@ export async function POST(req: Request) {
       httpOnly: true,
       maxAge: 15 * 60,
       sameSite: "lax",
-      secure: true,
+      secure: process.env.NODE_ENV === 'production',
       path: "/",
     });
 
-    const refreshToken = jwt.sign(
-      { userEmail: formData.email, type: "refresh" },
-      process.env.JWT_SECRET,
-      {
-        algorithm: "HS256",
-        expiresIn: 60 * 60 * 24 * 7,
-      },
-    );
 
-    const newUser: User = await prisma.user.create({
-      data: {
-        email: formData.email,
-        password: formData.password,
-        refreshToken: refreshToken,
-      },
-    });
 
     cookieStore.set({
       name: "refreshToken",
@@ -95,7 +95,7 @@ export async function POST(req: Request) {
       httpOnly: true,
       maxAge: 60 * 60 * 24 * 7,
       path: "/",
-      secure: true,
+      secure: process.env.NODE_ENV === 'production',
       sameSite: "strict",
     });
 

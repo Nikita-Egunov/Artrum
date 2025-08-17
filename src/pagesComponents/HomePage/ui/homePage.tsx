@@ -1,6 +1,7 @@
 import { About, Footer, Header, Hero, Slider } from "@/widgets";
+import { JSX } from "react";
 
-export default function HomePage() {
+export default function HomePage(): JSX.Element {
   return (
     <>
       <Header />

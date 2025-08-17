@@ -32,7 +32,7 @@ export async function POST(req: NextRequest) {
       return new Response('Authorization', { status: 401 })
     }
 
-    if (!decoded.userEmail) {
+    if (!decoded.userId) {
       console.log('!decoded.userEmail');
       
       return NextResponse.json({ error: 'Authorization' }, { status: 401 })
@@ -52,12 +52,12 @@ export async function POST(req: NextRequest) {
 
     const user = await prisma.user.findUnique({
       where: {
-        email: decoded.userEmail,
+        id: decoded.userId,
       }
     })
 
     if (!user) {
-      console.log('decoded.userEmail', decoded.userEmail);
+      console.log('decoded.userEmail', decoded.userId);
       
       console.log('!user');
       
@@ -77,7 +77,7 @@ export async function POST(req: NextRequest) {
     }
 
     const updatedUser = await prisma.user.update({
-      where: { email: decoded.userEmail },
+      where: { id: decoded.userId },
       data: updateData,
       select: {
         id: true,

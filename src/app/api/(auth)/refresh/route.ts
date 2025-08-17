@@ -26,6 +26,8 @@ export async function POST(req: Request) {
         { status: 401 },
       );
     }
+    console.log(decoded);
+
 
     // 3. Поиск пользователя
     const user = await prisma.user.findUnique({
@@ -39,7 +41,7 @@ export async function POST(req: Request) {
     }
 
     // 4. Генерация новых токенов
-    const newAccessToken = generateToken(user.email, "access", "15m");
+    const newAccessToken = generateToken(user.id, "access", "15m");
     const newRefreshToken = generateToken(user.email, "refresh", "7d");
 
     // 5. Создаем ответ с куками
@@ -70,6 +72,8 @@ export async function POST(req: Request) {
 
     return response;
   } catch (error) {
+    console.log(error);
+
     return NextResponse.json(
       { error: "Internal Server Error" },
       { status: 500 },
@@ -83,12 +87,17 @@ function getCookieValue(cookieHeader: string, name: string) {
   return match ? match[2] : null;
 }
 
-function generateToken(email: string, type: string, expiresIn: string) {
+function generateToken(userIndemnificator: string | number, type: 'access' | 'refresh', expiresIn: string) {
   if (!process.env.JWT_SECRET) {
     throw new Error("JWT_SECRET is not defined");
   }
-  return jwt.sign({ userEmail: email, type }, process.env.JWT_SECRET, {
+  const userSomething = type === 'access' ? 'userId' : 'userEmail'
+  const jwtSign = jwt.sign({ [userSomething]: userIndemnificator, type }, process.env.JWT_SECRET, {
     expiresIn,
     algorithm: "HS256",
   } as jwt.SignOptions);
+
+  console.log('refresh rout',jwt.decode(jwtSign));
+
+  return jwtSign;
 }

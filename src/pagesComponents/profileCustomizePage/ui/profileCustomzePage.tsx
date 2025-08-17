@@ -1,8 +1,9 @@
 import { AvatarCustomize, NameCustomize } from "@/features/profile/ui/customize";
 import { Header } from "@/widgets";
 import Link from "next/link";
+import { JSX } from "react";
 
-export default function ProfileCustomizePage() {
+export default function ProfileCustomizePage(): JSX.Element {
   return (
     <>
       <header className="pt-[10px] px-[10px]">
@@ -13,7 +14,7 @@ export default function ProfileCustomizePage() {
         </div>
       </header>
       <main className="md:flex space-2.5 px-[10px] justify-center gap-2.5 mt-[10px]">
-        <AvatarCustomize />
+        {/* <AvatarCustomize /> */}
         <NameCustomize />
       </main>
     </>

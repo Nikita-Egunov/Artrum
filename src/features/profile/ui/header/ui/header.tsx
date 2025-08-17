@@ -1,14 +1,25 @@
+"use server"
+
 import { getProfile } from "@/utils";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
 import { formatMoney } from "../util/formatMoney";
 
 export default async function Header() {
   const cookieStore = await cookies();
-  const token = cookieStore.get("token")?.value;
+  const token = cookieStore.get("refreshToken")?.value;
+
+  const headersList = await headers();
+  const protocol = headersList.get('x-forwarded-proto') || 'http';
+  const host = headersList.get('host');
+  const baseUrl = `${protocol}://${host}`;
+
 
   const user = await getProfile(token);
+
+  console.log(user);
+
 
   const money = formatMoney(user?.moneyWasted)
 

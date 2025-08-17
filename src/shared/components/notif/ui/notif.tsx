@@ -5,13 +5,13 @@ import { useEffect, useState } from "react";
 interface NotifProps {
   children: React.ReactNode;
   type?: "success" | "warning" | "error";
-  onClose?: () => void; // Добавляем колбэк
+  setOnOpen: (state: boolean) => void; // Добавляем колбэк
 }
 
 export default function Notif({
   children,
   type = "success",
-  onClose,
+  setOnOpen,
 }: NotifProps) {
   const [progress, setProgress] = useState(100);
 
@@ -26,7 +26,7 @@ export default function Notif({
   // Вызываем onClose после завершения прогресса
   useEffect(() => {
     if (progress === 0) {
-      onClose?.();
+      setOnOpen(false);
     }
   }, [progress]);
 

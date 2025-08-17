@@ -56,7 +56,7 @@ const getUser = async (token: string | undefined) => {
 
   return await prisma.user.findUnique({
     where: {
-      email: decodedToken.userEmail,
+      id: decodedToken.userId,
     }
   })
 }

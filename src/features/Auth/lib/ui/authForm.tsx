@@ -175,7 +175,7 @@ export default function AuthForm({ onSignUp = false }: Props) {
         </p>
       </form>
       {loading && (
-        <Notif type={respType} onClose={() => setLoading(false)}>
+        <Notif type={respType} setOnOpen={setLoading}>
           {respType === "success"
             ? `Успешно. Вы будите перенаправлены в ваш профиль`
             : "Ошибка входа. Попробуйте ещё раз"}

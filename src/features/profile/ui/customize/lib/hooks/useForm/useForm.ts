@@ -7,6 +7,7 @@ export default function useForm() {
   const [data, setData] = useState<{ [key: string]: string }>({})
   const [canSend, setCanSend] = useState(true)
   const [errors, setErrors] = useState<string[]>([])
+  const [status, setStatus] = useState<"success" | "error" | null>(null)
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
@@ -53,12 +54,12 @@ export default function useForm() {
         })
         .then(data => {
           console.log('Форма успешно отправлена:', data);
+          setStatus("success")
         })
         .catch(error => {
           console.error('Ошибка:', error.message);
+          setStatus("error")
           setErrors([error.message]);
-        }).finally(() => {
-          window.location.reload()
         })
     }
   }
@@ -75,5 +76,5 @@ export default function useForm() {
     }
   }
 
-  return { handleSubmit, handleInputChange }
+  return { handleSubmit, handleInputChange, status }
 }

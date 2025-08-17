@@ -1,4 +1,4 @@
-import { SignInPage } from "@/pages/signInPage";
+import { SignInPage } from "@/pagesComponents/signInPage";
 
 export default function Page() {
   return <SignInPage />;

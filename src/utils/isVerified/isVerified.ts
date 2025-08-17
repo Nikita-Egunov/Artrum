@@ -22,8 +22,8 @@ export async function isVerified(token: string | undefined): Promise<boolean> {
       return false;
     }
 
-    // 5. Проверка наличия email в токене
-    if (!decoded.userEmail) {
+    // 5. Проверка наличия id в токене
+    if (!decoded.userId) {
       return false;
     }
 

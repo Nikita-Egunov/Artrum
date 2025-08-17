@@ -1,4 +1,4 @@
 export interface Token {
-  userEmail: string;
+  userId: number;
   type: "access" | "refresh";
 }

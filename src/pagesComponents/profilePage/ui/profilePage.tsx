@@ -1,7 +1,8 @@
 import { Header } from "@/features/profile";
 import { Slider } from "@/widgets";
+import { JSX } from "react";
 
-export default function ProfilePage() {
+export default function ProfilePage(): JSX.Element {
   return (
     <>
       <Header />
