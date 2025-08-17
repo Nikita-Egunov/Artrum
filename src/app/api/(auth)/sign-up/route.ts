@@ -103,7 +103,7 @@ export async function POST(req: Request) {
       status: 200,
     });
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return new Response("Error", {
       status: 500,
       statusText: "Internal Server Error",

@@ -100,7 +100,7 @@ export async function POST(req: Request) {
       token,
     });
   } catch (error) {
-    console.log(error);
+    console.error(error);
 
     return new Response("Error", {
       status: 400,
