@@ -1,6 +1,6 @@
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL") // Подтянется из .env
+  provider  = "postgresql"
+  url       = env("DATABASE_URL") // Подтянется из .env
   directUrl = env("DIRECT_URL")
 }
 
@@ -15,4 +15,5 @@ model User {
   refreshToken String
   moneyWasted  Int     @default(0)
   name         String?
+  avatarUrl    String? @default("/nft.jpg")
 }

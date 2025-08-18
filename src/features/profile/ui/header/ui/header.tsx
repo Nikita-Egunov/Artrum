@@ -44,13 +44,9 @@ export default async function Header() {
               <p className="text-primary-200 text-sm">Потрачено</p>
             </div>
             <div className="flex gap-2.5">
-              <Link href={'/profile/customize'} className="border-2 border-secondary-300 text-secondary-300 px-6 py-2 
-                            rounded-full hover:bg-secondary-300 hover:text-white transition-colors">
+              <Link href={'/profile/customize'} className="border-2 border-accent-300 text-accent-300 px-6 py-2 
+                            rounded-full hover:bg-accent-300 hover:text-white transition-colors">
                 Редактировать
-              </Link>
-              <Link href={'/profile/settings'} className="bg-accent-300 text-white px-6 py-2 rounded-full 
-                            hover:bg-accent-400 transition-colors">
-                Настройки
               </Link>
             </div>
           </div>

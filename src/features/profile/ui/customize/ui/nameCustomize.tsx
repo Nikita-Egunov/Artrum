@@ -12,21 +12,21 @@ export default function NameCustomize() {
   const [notifOpen, setNotifOpen] = useState(false);
 
   if (loading) return (
-    <div className="max-w-xl w-full p-6 flex justify-center items-center bg-primary-800/40 rounded-xl border border-primary-700 space-y-8">
+    <div className="w-full p-6 flex justify-center items-center bg-primary-800/40 rounded-xl border border-primary-700 space-y-8">
       <span className="w-5 h-5 block border-b border-primary-400 rounded-full animate-spin"></span>
     </div>
   )
 
 
   if (error) return (
-    <div className="max-w-xl w-full p-6 flex justify-center items-center bg-primary-800/40 rounded-xl border border-primary-700 space-y-8">
+    <div className="w-full p-6 flex justify-center items-center bg-primary-800/40 rounded-xl border border-primary-700 space-y-8">
       <p className="text-primary-100">Упс, что то упало...</p>
     </div>
   )
 
   return (
     <>
-      <div className="max-w-xl w-full p-6 bg-primary-800/40 rounded-xl border border-primary-700 space-y-8">
+      <div className="w-full p-6 bg-primary-800/40 rounded-xl border border-primary-700 space-y-8">
         <h2 className="text-2xl font-bold text-primary-50">Изменение данных аккаунта</h2>
 
         <form noValidate className="space-y-6" onSubmit={(e) => {
