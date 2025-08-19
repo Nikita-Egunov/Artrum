@@ -150,21 +150,6 @@ export default function AvatarCustomize() {
             {isLoading ? 'Загрузка...' : 'Сохранить изменения'}
           </button>
         </div>
-
-        {previewUrl && (
-          <p className="text-primary-200 text-sm mt-6 text-center">
-            Хотите удалить аватар?{' '}
-            <button
-              type="button"
-              onClick={() => {
-                setImageFile(null);
-                setPreviewUrl('');
-              }}
-              className="text-secondary-300 hover:text-secondary-400 transition-colors">
-              Удалить
-            </button>
-          </p>
-        )}
       </form>
       {notifOpen &&
         <Notif
