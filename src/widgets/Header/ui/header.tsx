@@ -1,22 +1,15 @@
 "use server";
 import Link from "next/link";
-import { cookies, headers } from "next/headers";
+import { cookies } from "next/headers";
 import { getProfile } from "@/utils";
 import { User } from "@prisma/client";
 
 export default async function Header() {
   const cookieStore = await cookies();
-  const token = cookieStore.get("refreshToken")?.value;
-  let user = null as User | null | undefined;
+  const refreshToken = cookieStore.get("refreshToken")?.value
 
-  const headersList = await headers();
-  const protocol = headersList.get('x-forwarded-proto') || 'http';
-  const host = headersList.get('host');
-  const baseUrl = `${protocol}://${host}`;
-  try {
-    user = await getProfile(token);
-  } catch (error) {
-  }
+  const user = await getProfile(refreshToken);
+
 
   return (
     <header className="z-40 artrum-gradient-300 py-4 shadow-lg absolute top-0 left-0 w-full">

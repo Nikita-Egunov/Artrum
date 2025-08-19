@@ -1,4 +1,7 @@
+"use client"
+
 import { configureStore, createSlice } from "@reduxjs/toolkit";
+import { profileApi } from "./apiSlices/profileSlice";
 
 const testReducer = createSlice({
   name: "test",
@@ -15,13 +18,20 @@ const testReducer = createSlice({
   },
 });
 
+
+
 export const makeStore = () => {
   return configureStore({
     reducer: {
-      testReducer: testReducer.reducer,
+      [profileApi.reducerPath]: profileApi.reducer,
     },
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware().concat(
+        profileApi.middleware,
+        // другие middleware...
+      ),
   });
-};
+}
 
 // Infer the type of makeStore
 export type AppStore = ReturnType<typeof makeStore>;

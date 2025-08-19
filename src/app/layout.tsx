@@ -1,8 +1,11 @@
+
+
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import "swiper/css";
 import "./globals.css";
-import StoreProvider from "./StoreProvider";
+import StoreProvider from "./providers/StoreProvider";
+
 
 const roboto = Roboto({
   variable: "--font-roboto",

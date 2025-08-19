@@ -1,29 +1,24 @@
 "use server";
 
-import { prisma, Token } from "@/shared";
+import { prisma } from "@/shared";
 import * as jwt from "jsonwebtoken";
+import { RefreshToken } from "../types/token.interface";
+import { logger } from "@/shared/lib";
+import { User } from "@prisma/client";
 
 export default async function getProfile(refreshToken: string | undefined) {
   try {
-    if (!process.env.JWT_SECRET) {
-      throw new Error("process.env.JWT_SECRET");
+    if (!process.env.JWT_SECRET || !refreshToken) {
+      throw new Error("process.env.JWT_SECRET || !refreshToken");
     }
 
-    if (!refreshToken) {
-      throw new Error("!refreshToken");
-    }
-    const decoded = jwt.decode(refreshToken) as { userEmail: string; type: "refresh" };
+    const decoded = jwt.decode(refreshToken) as RefreshToken
 
-    if (decoded.type !== "refresh") {
-      throw new Error("!refresh type");
+    if (decoded.type !== "refresh"|| !decoded.userEmail) {
+      throw new Error('decoded.type !== "refresh"|| !decoded.userEmail');
     }
 
-    if (!decoded.userEmail) {
-      throw new Error("!.userId");
-    }
-
-
-    const user = prisma.user.findUnique({
+    const user = await prisma.user.findUnique({
       where: {
         email: decoded.userEmail,
       },
@@ -33,8 +28,8 @@ export default async function getProfile(refreshToken: string | undefined) {
       throw new Error("User not found");
     }
 
-    return user;
+    return user as User
   } catch (error) {
-    console.error(error);
+    logger.error(error)
   }
 }
