@@ -8,10 +8,7 @@ import { prisma, Token } from '@/shared';
 export async function POST(request: Request) {
   const cookieStore = await cookies();
   const token = cookieStore.get('token')?.value
-
-  console.log(token);
-
-
+  
   if (!token) {
     return NextResponse.json(
       { error: 'Unauthorized' },

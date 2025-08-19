@@ -8,7 +8,7 @@ import { useState } from "react";
 export default function NameCustomize() {
 
   const { profile, loading, error } = useProfile();
-  const { handleSubmit, handleInputChange, status } = useForm()
+  const { handleSubmit, handleInputChange, status, data } = useForm()
   const [notifOpen, setNotifOpen] = useState(false);
 
   if (loading) return (
@@ -60,26 +60,11 @@ export default function NameCustomize() {
             />
             <span></span>
           </div>
-
-          {/* Password Field */}
-          {/* <div>
-            <label className="block text-primary-100 text-sm mb-2">Новый пароль</label>
-            <input
-              type="password"
-              placeholder="Введите новый пароль"
-              className="w-full px-4 py-3 bg-primary-900 border border-primary-600 rounded-lg
-                focus-visible:outline-none focus:ring-2 focus:ring-accent-300 focus:border-transparent"
-              name="password"
-              onChange={handleInputChange}
-
-            />
-            <span></span>
-          </div> */}
           <PasswordInput required={false} labelTitle="Новый пароль" autoComplete="new-password webauthn" name="password" placeholder="Введите новый пароль" onChange={handleInputChange} />
 
           <div className="flex gap-4 justify-end">
-            <button className="border-2 border-secondary-300 text-secondary-300 px-6 py-2 
-                          rounded-full hover:bg-secondary-300 hover:text-white transition-colors">
+            <button className={`border-2 border-secondary-300 text-secondary-300 px-6 py-2 ${Object.keys(data).length === 0 && 'opacity-50 cursor-not-allowed'}
+                          rounded-full hover:bg-secondary-300 hover:text-white transition-colors`}>
               Сохранить изменения
             </button>
           </div>

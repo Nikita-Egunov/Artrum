@@ -29,8 +29,7 @@ export default function validateInputs(input: HTMLInputElement) {
       }
     }
     case "email": {
-      console.log('email');
-      
+
       const errors = [] as string[]
       if (input.value.length === 0) {
         errors.push(errorMessages.email.required)

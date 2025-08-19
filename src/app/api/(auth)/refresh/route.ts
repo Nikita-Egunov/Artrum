@@ -19,14 +19,13 @@ export async function POST(req: Request) {
     };
 
     if (decoded.type !== "refresh") {
-      console.log("decoded.type !== 'refresh'");
+      console.error("decoded.type !== 'refresh'");
 
       return NextResponse.json(
         { error: "Invalid token type" },
         { status: 401 },
       );
     }
-    console.log(decoded);
 
 
     // 3. Поиск пользователя
@@ -35,7 +34,7 @@ export async function POST(req: Request) {
     });
 
     if (!user) {
-      console.log("!user");
+      console.error("!user");
 
       return NextResponse.json({ error: "User not found" }, { status: 401 });
     }
@@ -43,6 +42,13 @@ export async function POST(req: Request) {
     // 4. Генерация новых токенов
     const newAccessToken = generateToken(user.id, "access", "15m");
     const newRefreshToken = generateToken(user.email, "refresh", "7d");
+
+    await prisma.user.update({
+      where: { id: user.id },
+      data: {
+        refreshToken: newRefreshToken,
+      },
+    })
 
     // 5. Создаем ответ с куками
     const response = NextResponse.json({ status: "OK" }, { status: 200 });
@@ -67,9 +73,6 @@ export async function POST(req: Request) {
       secure: process.env.NODE_ENV === "production",
       path: "/",
     });
-
-    console.log("OK");
-
     return response;
   } catch (error) {
     console.error(error);
@@ -96,8 +99,6 @@ function generateToken(userIndemnificator: string | number, type: 'access' | 're
     expiresIn,
     algorithm: "HS256",
   } as jwt.SignOptions);
-
-  console.log('refresh rout',jwt.decode(jwtSign));
 
   return jwtSign;
 }

@@ -54,8 +54,8 @@ export async function verifyAccessToken(req: NextRequest) {
 
     // 3. Попытка обновить токен
     if (refreshToken) {
-      console.log('refreshToken');
-
+      console.log('try to refresh token');
+      
       const refreshAccessResponse = await refreshAccess(req);
       if (refreshAccessResponse) {
         return refreshAccessResponse

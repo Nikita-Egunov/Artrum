@@ -129,7 +129,6 @@ export default function useValidate() {
           break;
       }
     });
-    console.log(data);
     fetch(url, {
       method: "POST",
       headers: {

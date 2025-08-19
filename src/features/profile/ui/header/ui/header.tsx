@@ -10,17 +10,7 @@ export default async function Header() {
   const cookieStore = await cookies();
   const token = cookieStore.get("refreshToken")?.value;
 
-  const headersList = await headers();
-  const protocol = headersList.get('x-forwarded-proto') || 'http';
-  const host = headersList.get('host');
-  const baseUrl = `${protocol}://${host}`;
-
-
   const user = await getProfile(token);
-
-  console.log(user);
-
-
   const money = formatMoney(user?.moneyWasted)
 
   return (
@@ -30,7 +20,7 @@ export default async function Header() {
           <Link href={'/'} className="flex items-center gap-4">
             <div className="relative">
               <div className="w-16 h-16 overflow-hidden relative rounded-full bg-primary-700 border-2 border-accent-300">
-                <Image className="w-full h-full" src={'/nft.jpg'} alt="Аватар" width={70} height={70} />
+                <Image className="absolute w-full h-full object-cover object-center" src={user?.avatarUrl ? user.avatarUrl : '/nft.jpg'} alt="Аватар" width={70} height={70} />
               </div>
             </div>
             <div>

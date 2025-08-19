@@ -9,7 +9,7 @@ export async function POST(req: NextRequest) {
     const refreshToken = req.cookies.get('refreshToken')?.value
 
     if (!refreshToken || !process.env.JWT_SECRET) {
-      console.log('!refreshToken || !process.env.JWT_SECRET');
+      console.error('!refreshToken || !process.env.JWT_SECRET');
       return new Response('Authorization', { status: 401 }) 
     }
 
@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
       try {
         await refreshAccess(req)
       } catch (error) {
-        console.log('!refreshAccess');
+        console.error('!refreshAccess');
         
         return new Response('Authorization', { status: 401 })
       }
@@ -27,13 +27,13 @@ export async function POST(req: NextRequest) {
     const decoded = jwt.verify(token, process.env.JWT_SECRET) as Token
 
     if (decoded.type !== 'access') {
-      console.log('!decoded.type !== "access"');
+      console.error('!decoded.type !== "access"');
       
       return new Response('Authorization', { status: 401 })
     }
 
     if (!decoded.userId) {
-      console.log('!decoded.userEmail');
+      console.error('!decoded.userEmail');
       
       return NextResponse.json({ error: 'Authorization' }, { status: 401 })
     }
@@ -45,7 +45,7 @@ export async function POST(req: NextRequest) {
     }
 
     if (!email) {
-      console.log('!email');
+      console.error('!email');
       
       return NextResponse.json({ error: 'Bad request' }, { status: 400 })
     }
@@ -57,9 +57,9 @@ export async function POST(req: NextRequest) {
     })
 
     if (!user) {
-      console.log('decoded.userEmail', decoded.userId);
+      console.error('decoded.userEmail', decoded.userId);
       
-      console.log('!user');
+      console.error('!user');
       
       return new Response('Authorization', {
         status: 401

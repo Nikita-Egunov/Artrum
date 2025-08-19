@@ -16,14 +16,11 @@ export async function GET(req: NextRequest) {
     }
 
     if (await isVerified(token)) {
-      console.log('verified');
-      
       const user = await getUser(token)
       if (!user) { return new Response("User not found", { status: 404 }); }
       return sendUser(user)
     } else {
-      console.log('!verified');
-      
+
       const refreshResponse = await refreshAccess(req)
 
       if (refreshResponse) {
@@ -51,8 +48,6 @@ const getUser = async (token: string | undefined) => {
   if (!token) { throw new Error("Missing token"); }
 
   const decodedToken = jwt.decode(token) as Token;
-  console.log(decodedToken);
-  
 
   return await prisma.user.findUnique({
     where: {

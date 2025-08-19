@@ -18,8 +18,6 @@ export default async function refreshAccess(req: NextRequest) {
 
 
     if (refreshResponse.ok) {
-      console.log('resp ok');
-
       // Создаем ответ и копируем куки из refreshResponse
       const response = NextResponse.next() as NextResponse<{ status: "OK" }>
 

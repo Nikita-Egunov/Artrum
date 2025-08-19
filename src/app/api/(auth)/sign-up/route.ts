@@ -61,7 +61,7 @@ export async function POST(req: Request) {
       process.env.JWT_SECRET,
       {
         algorithm: "HS256",
-        expiresIn: 60 * 60 * 24 * 7,
+        expiresIn: '7d',
       },
     );
     const newUser: User = await prisma.user.create({
@@ -74,7 +74,9 @@ export async function POST(req: Request) {
     const token = jwt.sign(
       { userId: newUser.id, type: "access" },
       process.env.JWT_SECRET,
-      { algorithm: "HS256" },
+      {
+        algorithm: "HS256",
+      },
     );
 
     cookieStore.set({
@@ -86,8 +88,6 @@ export async function POST(req: Request) {
       secure: process.env.NODE_ENV === 'production',
       path: "/",
     });
-
-
 
     cookieStore.set({
       name: "refreshToken",

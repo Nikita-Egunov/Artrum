@@ -2,7 +2,6 @@
 
 import { prisma, Token } from "@/shared";
 import * as jwt from "jsonwebtoken";
-import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
 
 export default async function getProfile(refreshToken: string | undefined) {
   try {
@@ -18,8 +17,6 @@ export default async function getProfile(refreshToken: string | undefined) {
     if (decoded.type !== "refresh") {
       throw new Error("!refresh type");
     }
-
-    console.log(decoded);
 
     if (!decoded.userEmail) {
       throw new Error("!.userId");
@@ -38,7 +35,6 @@ export default async function getProfile(refreshToken: string | undefined) {
 
     return user;
   } catch (error) {
-    console.log(error);
-
+    console.error(error);
   }
 }

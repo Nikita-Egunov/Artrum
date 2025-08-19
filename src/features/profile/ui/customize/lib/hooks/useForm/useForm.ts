@@ -53,13 +53,15 @@ export default function useForm() {
           return response.text();
         })
         .then(data => {
-          console.log('Форма успешно отправлена:', data);
           setStatus("success")
         })
         .catch(error => {
           console.error('Ошибка:', error.message);
           setStatus("error")
           setErrors([error.message]);
+        })
+        .finally(() => {
+          setData({})
         })
     }
   }
@@ -73,8 +75,9 @@ export default function useForm() {
       addSpanError(input, validateResult)
     } else {
       addSpanError(input, [], false)
+      setData({ [input.name]: input.value })
     }
   }
 
-  return { handleSubmit, handleInputChange, status }
+  return { handleSubmit, handleInputChange, status, data }
 }

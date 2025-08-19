@@ -1,3 +1,6 @@
-import { Header } from "./ui";
+import { AddAft } from "./admin";
+import { AvatarCustomize, Header, NameCustomize } from "./ui";
 
-export { Header }
+export { Header, AddAft }
+export { AvatarCustomize }
+export { NameCustomize }
