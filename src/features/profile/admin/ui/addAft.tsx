@@ -177,14 +177,14 @@ export default function AddAft() {
           </div>
         </div>
       </form>
-      {notifOpenAft &&
+      {/* {notifOpenAft &&
         <Notif
           setOnOpen={setNotifOpenAft}
           type={statusAft}
         >
           {statusAft === 'success' ? 'Успешно изменено' : 'Ошибка. Проверьте формат и размер файла.'}
         </Notif>
-      }
+      } */}
     </>
   );
 }
