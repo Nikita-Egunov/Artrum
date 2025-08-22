@@ -2,91 +2,120 @@
 "use client";
 
 import { Notif } from "@/shared/components";
-import { useState } from "react";
+import NumberInput from "@/shared/components/Input/typeNumber/inputTypeNumber";
+
+import { useGetProfileQuery } from "@/shared";
+import { RootState } from "@/shared/redux";
+import { openNotif } from "@/shared/redux/slices/notifSlice";
+import { convertToBase64 } from "@/utils";
+import { zodResolver } from "@hookform/resolvers/zod";
+import Image from "next/image";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import z, { boolean, object } from "zod";
+import { useRef } from "react";
+
 
 export default function AddAft() {
-  const [imageFileAft, setImageFileAft] = useState<File | null>(null);
-  const [previewUrlAft, setPreviewUrlAft] = useState('');
-  const [notifOpenAft, setNotifOpenAft] = useState(false);
-  const [statusAft, setStatusAft] = useState<'success' | 'error'>('success');
-  const [isLoadingAft, setIsLoadingAft] = useState(false);
-  const [formDataAft, setFormDataAft] = useState<{ [key: string]: string }>({})
-  const handleFileChangeAft = (file: File) => {
-    // Проверка типа файла
-    if (!file.type.startsWith('image/')) {
-      setStatusAft('error');
-      setNotifOpenAft(true);
-      return;
-    }
+  const priseInputRef = useRef<HTMLInputElement>(null);
+  const dispatch = useDispatch();
+  const { isOpen, message, type } = useSelector((state: RootState) => state.notif);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const inputSchema = z.object({
+    image: z
+      .instanceof(globalThis.FileList, { message: 'Загрузите изображение' })
+      .refine((files) => files.length === 1, 'Только одино изображение')
+      .refine((files) => files[0]?.size <= 4 * 1024 * 1024, "Размер изображения не должен превышать 4 МБ")
+      .refine((files) => ["image/jpeg", "image/png", "image/webp"].includes(files[0]?.type)),
+    title: z
+      .string().min(1, { error: 'Нельзя оставлять пустым' }),
+    description: z
+      .string().min(1, { error: 'Нельзя оставлять пустым' }),
+  })
 
-    // Проверка размера (5MB)
-    if (file.size > 4 * 1024 * 1024) {
-      setStatusAft('error');
-      setNotifOpenAft(true);
-      return;
-    }
+  type InputSchema = z.infer<typeof inputSchema>
 
-    setImageFileAft(file);
+  const {
+    handleSubmit,
+    formState: { errors, isValid },
+    register,
+    watch,
+    setValue,
+    reset
+  } = useForm<InputSchema>({
+    resolver: zodResolver(inputSchema),
+    mode: "all",
+    reValidateMode: "onChange",
+  })
 
-    // Создание превью
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setPreviewUrlAft(reader.result as string);
-    };
-    reader.readAsDataURL(file);
-  };
-  async function handleSubmitAft(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    if (!imageFileAft) return;
+  const imageFile = watch("image") as FileList
 
-    const form = e.target as HTMLFormElement;
+  const onSubmit = (data: InputSchema) => {
+    console.log(data);
 
-    const inputs = form.querySelectorAll('input');
+    const formData = new FormData();
 
-    inputs.forEach((inp) => {
-      if (inp.name) {
-        setFormDataAft((prev) => ({ ...prev, [inp.name]: inp.value }));
-      }
+    formData.append("image", data.image[0]);
+    formData.append("title", data.title);
+    formData.append("description", data.description);
+    formData.append("price", priseInputRef.current?.value || '0');
+
+    setIsSubmitting(true)
+
+    fetch('/api/addAft', {
+      method: 'POST',
+      body: formData,
+      credentials: 'include',
     })
-    setIsLoadingAft(true);
-
-
-    try {
-      // 1. Создаем FormData и добавляем файл
-      const formData = new FormData();
-      formData.append('image', imageFileAft);
-
-      // 2. Отправляем запрос без явного Content-Type
-      const response = await fetch('/api/updateUser/updateUserPhoto', {
-        method: 'POST',
-        credentials: 'include',
-        body: formData, // Передаем FormData напрямую
-        // Заголовок Content-Type с boundary установится автоматически
-      });
-
-      if (!response.ok) throw new Error('Upload failed');
-
-      setStatusAft('success');
-      setNotifOpenAft(true);
-    } catch (error) {
-      console.error('Upload failed:', error);
-      setStatusAft('error');
-    } finally {
-      setNotifOpenAft(true);
-      setIsLoadingAft(false);
-      setPreviewUrlAft('');
-      const form = e.target as HTMLFormElement;
-      form.reset();
-    }
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("Error adding AFT");
+        }
+        dispatch(openNotif({
+          message: 'Успешно изменено',
+          type: 'success',
+          redirectUrl: null,
+        }))
+        setPreviewUrl(null);
+        reset()
+      })
+      .catch((error) => {
+        console.error(error);
+        dispatch(openNotif({
+          message: 'Произошла ошибка. Попробуйте позже',
+          type: 'error',
+          redirectUrl: null,
+        }))
+      })
+      .finally(() => {
+        setIsSubmitting(false)
+      })
   }
+
+  useEffect(() => {
+    (async () => {
+      const image = imageFile?.[0]
+      if (image instanceof File) {
+        const url = await convertToBase64(image)
+        setPreviewUrl(url)
+      }
+    })()
+  }, [imageFile])
+
+  useEffect(() => {
+    console.log(errors.title?.message);
+
+  }, [errors.title?.message])
 
   return (
     <>
-      <form onSubmit={handleSubmitAft} className="p-6 bg-primary-800/40 rounded-xl border border-primary-700 space-y-6">
+      <form onSubmit={handleSubmit(onSubmit)} className="p-6 bg-primary-800/40 rounded-xl border border-primary-700 space-y-6">
         <h2 className="text-2xl font-bold text-primary-50">Добавить новую AFT</h2>
 
-        <div className="border-2 border-dashed border-primary-600 rounded-xl p-6 text-center
-                     hover:border-accent-300 transition-colors cursor-pointer group"
+        <div className="border-2 border-dashed border-primary-600 rounded-xl p-8 text-center
+                     hover:border-accent-300 transition-colors cursor-pointer"
           onDragOver={(e) => {
             e.preventDefault();
             e.currentTarget.classList.add('border-accent-300');
@@ -99,13 +128,18 @@ export default function AddAft() {
             e.preventDefault();
             e.currentTarget.classList.remove('border-accent-300');
             if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-              handleFileChangeAft(e.dataTransfer.files[0]);
+              setValue(
+                "image",
+                e.dataTransfer.files,
+                { shouldValidate: true }
+              )
             }
-          }}>
-          {previewUrlAft ? (
+          }}
+        >
+          {(previewUrl && !(errors.image)) ? (
             <div className="mb-4">
               <img
-                src={previewUrlAft}
+                src={previewUrl}
                 alt="Preview"
                 className="mx-auto max-h-48 rounded-md"
               />
@@ -127,19 +161,22 @@ export default function AddAft() {
                   выберите
                 </label>
               </p>
+              <p className="text-primary-200 text-sm">
+                Форматы: JPG, PNG • Макс. размер: 4MB
+              </p>
             </>
           )}
+
+          {errors.image &&
+            <span className="text-red-500 block">{errors.image.message}</span>
+          }
+
           <input
             id="aft-upload"
             type="file"
             className="hidden"
             accept="image/*"
-            name="image"
-            onChange={(e) => {
-              if (e.target.files?.[0]) {
-                handleFileChangeAft(e.target.files[0]);
-              }
-            }}
+            {...register("image")}
           />
         </div>
 
@@ -147,12 +184,16 @@ export default function AddAft() {
           <div>
             <label className="block text-primary-100 text-sm mb-2">Название товара</label>
             <input
-              name="name"
               type="text"
               className="w-full px-4 py-3 bg-primary-900 border border-primary-600 rounded-lg
                      focus:ring-2 focus:ring-accent-300 focus:border-transparent"
               placeholder="Введите название"
+              {...register("title")}
+              onChange={(e) => { }}
             />
+            {errors.title &&
+              <span role="alert" className="text-red-500">{errors.title.message}</span>
+            }
           </div>
 
           <div>
@@ -161,30 +202,51 @@ export default function AddAft() {
               className="w-full px-4 py-3 bg-primary-900 border border-primary-600 rounded-lg
                      focus:ring-2 focus:ring-accent-300 focus:border-transparent h-32"
               placeholder="Добавьте описание товара"
-              name="description"
+              {...register("description")}
+            />
+            {errors.description &&
+              <span role="alert" className="text-red-500">{errors.description.message}</span>
+            }
+          </div>
+          <div>
+            <label className="block text-primary-100 text-sm mb-2">Цена</label>
+            <NumberInput
+              name="price"
+              size="lg"
+              defaultValue={0}
+              ref={priseInputRef}
             />
           </div>
 
-          <div className="flex justify-end gap-4">
+          <div className="mt-6 flex justify-end gap-4">
+            {((imageFile?.[0] instanceof File) && !isSubmitting) &&
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  setPreviewUrl(null);
+                  reset()
+                }}
+                className="px-6 py-2 border-accent-300 border rounded-full hover:bg-accent-300 hover:text-white text-accent-300 transition-colors"
+              >Удалить картинку</button>
+            }
             <button
               type="submit"
-              disabled={!imageFileAft || isLoadingAft}
+              disabled={isSubmitting || !isValid}
               className={`border-2 border-secondary-300 text-secondary-300 px-6 py-2 
                       rounded-full hover:bg-secondary-300 hover:text-white transition-colors
-                      ${(!imageFileAft || isLoadingAft) ? 'opacity-50 cursor-not-allowed' : ''}`}>
-              {isLoadingAft ? 'Загрузка...' : 'Сохранить изменения'}
+                      ${(isSubmitting || !isValid) ? 'opacity-50 cursor-not-allowed' : ''}`}>
+              {isSubmitting ? 'Загрузка...' : 'Сохранить изменения'}
             </button>
           </div>
         </div>
       </form>
-      {/* {notifOpenAft &&
+      {isOpen &&
         <Notif
-          setOnOpen={setNotifOpenAft}
-          type={statusAft}
+          type={type}
         >
-          {statusAft === 'success' ? 'Успешно изменено' : 'Ошибка. Проверьте формат и размер файла.'}
+          {message}
         </Notif>
-      } */}
+      }
     </>
   );
 }

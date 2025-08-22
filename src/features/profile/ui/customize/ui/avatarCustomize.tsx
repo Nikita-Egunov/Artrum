@@ -144,12 +144,11 @@ export default function AvatarCustomize() {
                   выберите
                 </label>
               </p>
+              <p className="text-primary-200 text-sm">
+                Форматы: JPG, PNG • Макс. размер: 4MB
+              </p>
             </>
           )}
-
-          <p className="text-primary-200 text-sm">
-            Форматы: JPG, PNG • Макс. размер: 4MB
-          </p>
 
           {errors.image &&
             <span className="text-red-500 block">{errors.image.message}</span>

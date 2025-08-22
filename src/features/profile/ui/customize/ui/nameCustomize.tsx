@@ -12,10 +12,10 @@ import { z } from "zod";
 
 const inputsSchema = z.object({
   nik: z.string().min(3, {
-    message: "Ник должен быть не менее 3 символов",
+    error: "Ник должен быть не менее 3 символов",
   }).or(z.literal('')),
   email: z.email({
-    message: "Некорректный email",
+    error: "Некорректный email",
   }),
   password: z.string().min(8, 'Пароль должен быть не менее 8 символов').or(z.literal('')),
 })
@@ -26,7 +26,7 @@ export default function NameCustomize() {
   const dispatch = useDispatch();
   const { isOpen, message, type, redirectUrl } = useSelector((state: RootState) => state.notif);
 
-  
+
   const {
     isError,
     data,
@@ -37,10 +37,10 @@ export default function NameCustomize() {
     handleSubmit,
     register,
     reset,
-    formState: { errors, isSubmitting, isValid, dirtyFields },
+    formState: { errors, dirtyFields },
   } = useForm<Inputs>({
     resolver: zodResolver(inputsSchema),
-    mode: 'onChange',
+    mode: 'all',
     reValidateMode: 'onChange',
   })
 

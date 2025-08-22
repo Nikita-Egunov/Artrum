@@ -9,11 +9,22 @@ generator client {
 }
 
 model User {
-  id           Int     @id @default(autoincrement())
+  id           Int     @id @unique @default(autoincrement())
   email        String  @unique
   password     String
   refreshToken String
   moneyWasted  Int     @default(0)
   name         String?
   avatarUrl    String? @default("/nft.jpg")
+  afts         Aft[]
+}
+
+model Aft {
+  id          Int    @unique @default(autoincrement())
+  masterId    Int?
+  master      User?  @relation(fields: [masterId], references: [id])
+  title       String
+  description String
+  imageUrl    String
+  cost        Float
 }
