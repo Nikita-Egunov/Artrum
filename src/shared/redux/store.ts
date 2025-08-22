@@ -1,35 +1,26 @@
 "use client"
 
-import { configureStore, createSlice } from "@reduxjs/toolkit";
+import notifReducer from "./slices/notifSlice";
+import { configureStore, createSlice, EnhancedStore } from "@reduxjs/toolkit";
 import { profileApi } from "./apiSlices/profileSlice";
-
-const testReducer = createSlice({
-  name: "test",
-  initialState: 0,
-  reducers: {
-    increment(state) {
-      return state + 1;
-    },
-    decrement(state) {
-      if (state > 0) {
-        return state - 1;
-      }
-    },
-  },
-});
-
+import { middleware as notifMiddleware } from "./middelwares/notifMidelware";
 
 
 export const makeStore = () => {
   return configureStore({
     reducer: {
       [profileApi.reducerPath]: profileApi.reducer,
+      notif: notifReducer,
     },
     middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware().concat(
-        profileApi.middleware,
-        // другие middleware...
-      ),
+      getDefaultMiddleware()
+        .concat(
+          profileApi.middleware,
+          // другие middleware...
+        )
+        .prepend(
+          notifMiddleware
+        )
   });
 }
 

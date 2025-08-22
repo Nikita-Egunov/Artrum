@@ -4,9 +4,9 @@ import * as jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
 
 export async function POST(req: Request) {
-
-  const cookieStore = await cookies();
   try {
+
+    const cookieStore = await cookies();
     const formData = await req.json();
     const { email, password } = formData;
 

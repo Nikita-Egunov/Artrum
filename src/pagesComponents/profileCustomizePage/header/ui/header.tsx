@@ -1,16 +1,20 @@
 "use client"
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function Header() {
+  const route = useRouter()
+  
   const handleClick = () => {
     fetch('/api/logOut', {
       method: 'GET',
       credentials: 'include',
     }).finally(() => {
-      window.location.href = '/';
+      route.push('/')
     })
   }
+
   return (
     <header className="pt-[10px] px-[10px] container base">
       <div className="w-full p-6 bg-primary-800/40 rounded-xl border border-primary-700 flex justify-between">
@@ -24,3 +28,4 @@ export default function Header() {
     </header>
   )
 }
+

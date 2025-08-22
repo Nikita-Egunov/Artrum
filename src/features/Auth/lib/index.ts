@@ -1,3 +1,4 @@
-import AuthForm from "./ui/authForm";
+import SignInForm from "./ui/signInForm";
+import SignUpForm from "./ui/signUpForm";
 
-export { AuthForm };
+export { SignInForm, SignUpForm }

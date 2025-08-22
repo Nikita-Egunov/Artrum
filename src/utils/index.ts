@@ -2,6 +2,7 @@ import getProfile from "./getProfile/getProfile";
 import { Data, useProfile, useValidate } from "./hooks";
 import { isVerified } from "./isVerified/isVerified";
 import refreshAccess from "./refreshAccess/refreshAccess";
+import { regexes } from "./regexes/regexes";
 import { RefreshToken, Token } from "./types/token.interface";
 
 export { useValidate };
@@ -11,3 +12,4 @@ export { isVerified };
 export { getProfile };
 export { useProfile }
 export { refreshAccess }
+export { regexes }

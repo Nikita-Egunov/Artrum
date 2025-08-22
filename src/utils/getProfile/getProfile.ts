@@ -3,7 +3,6 @@
 import { prisma } from "@/shared";
 import * as jwt from "jsonwebtoken";
 import { RefreshToken } from "../types/token.interface";
-import { logger } from "@/shared/lib";
 import { User } from "@prisma/client";
 
 export default async function getProfile(refreshToken: string | undefined) {
@@ -30,6 +29,6 @@ export default async function getProfile(refreshToken: string | undefined) {
 
     return user as User
   } catch (error) {
-    logger.error(error)
+    console.error(error)
   }
 }

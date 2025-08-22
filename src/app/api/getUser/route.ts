@@ -4,7 +4,6 @@ import { cookies } from "next/headers";
 import * as jwt from "jsonwebtoken";
 import { NextRequest } from "next/server";
 import { User } from "@prisma/client";
-import { logger } from "@/shared/lib";
 
 export async function GET(req: NextRequest) {
   try {
@@ -27,12 +26,10 @@ export async function GET(req: NextRequest) {
     })
 
     return new Response(JSON.stringify({
-      user: {
-        avatarUrl: user?.avatarUrl,
-        email: user?.email,
-        name: user?.name,
-        moneyWasted: user?.moneyWasted,
-      } as User
+      avatarUrl: user?.avatarUrl,
+      email: user?.email,
+      name: user?.name,
+      moneyWasted: user?.moneyWasted,
     }), {
       headers: {
         "Content-Type": "application/json",
@@ -40,7 +37,7 @@ export async function GET(req: NextRequest) {
       status: 200,
     })
   } catch (error) {
-    logger.error(error)
+    console.error(error)
 
     return new Response("Internal Error 500", {
       status: 500,

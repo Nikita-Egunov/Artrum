@@ -26,6 +26,7 @@ export default async function ProfileCustomizePage(): Promise<JSX.Element> {
           {profile?.email === process.env.ADMIN_EMAIL && <AddAft />}
         </section>
       </main>
+      {}
     </>
   )
 }
