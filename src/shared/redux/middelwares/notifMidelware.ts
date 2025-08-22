@@ -9,7 +9,7 @@ export const notifListenerMiddleware = createListenerMiddleware();
 notifListenerMiddleware.startListening.withTypes<RootState, AppDispatch>()({
   actionCreator: closeNotif,
   effect: async (action, listenerApi) => {
-    const currentState = listenerApi.getState(); // Теперь типизирован!
+    const currentState = listenerApi.getOriginalState(); // Теперь типизирован!
     const redirectUrl = currentState.notif.redirectUrl;
 
     if (redirectUrl) {

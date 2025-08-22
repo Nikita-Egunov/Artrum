@@ -26,6 +26,7 @@ export default function NameCustomize() {
   const dispatch = useDispatch();
   const { isOpen, message, type, redirectUrl } = useSelector((state: RootState) => state.notif);
 
+  
   const {
     isError,
     data,

@@ -1,3 +1,4 @@
+import { convertToBase64 } from "./convertToBase64/convertToBase64";
 import getProfile from "./getProfile/getProfile";
 import { Data, useProfile, useValidate } from "./hooks";
 import { isVerified } from "./isVerified/isVerified";
@@ -13,3 +14,4 @@ export { getProfile };
 export { useProfile }
 export { refreshAccess }
 export { regexes }
+export { convertToBase64 }

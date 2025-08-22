@@ -3,83 +3,102 @@
 
 import { useGetProfileQuery } from "@/shared";
 import { Notif } from "@/shared/components";
+import { RootState } from "@/shared/redux";
+import { openNotif } from "@/shared/redux/slices/notifSlice";
+import { convertToBase64 } from "@/utils";
+import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import z, { boolean, object } from "zod";
+
 
 export default function AvatarCustomize() {
-  const [imageFile, setImageFile] = useState<File | null>(null);
-  const [previewUrl, setPreviewUrl] = useState('');
-  const [notifOpen, setNotifOpen] = useState(false);
-  const [status, setStatus] = useState<'success' | 'error'>('success');
-  const [isLoading, setIsLoading] = useState(false);
+  const dispatch = useDispatch();
+  const { isOpen, message, redirectUrl, type } = useSelector((state: RootState) => state.notif);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const imageSchema = z.object({
+    image: z
+      .instanceof(globalThis.FileList, { message: 'Загрузите изображение' })
+      .refine((files) => files.length === 1, 'Только одино изображение')
+      .refine((files) => files[0].size <= 4 * 1024 * 1024, "Размер изображения не должен превышать 4 МБ")
+      .refine((files) => ["image/jpeg", "image/png", "image/webp"].includes(files[0].type))
+  })
 
-  const handleFileChange = (file: File) => {
-    // Проверка типа файла
-    if (!file.type.startsWith('image/')) {
-      setStatus('error');
-      setNotifOpen(true);
-      return;
-    }
+  type ImageSchema = z.infer<typeof imageSchema>
 
-    // Проверка размера (5MB)
-    if (file.size > 4 * 1024 * 1024) {
-      setStatus('error');
-      setNotifOpen(true);
-      return;
-    }
+  const {
+    handleSubmit,
+    formState: { dirtyFields, errors },
+    register,
+    watch,
+    setValue,
+    reset
+  } = useForm<ImageSchema>({
+    resolver: zodResolver(imageSchema),
+    mode: "onChange",
+    reValidateMode: "onChange",
+  })
 
-    setImageFile(file);
+  const imageFile = watch("image") as FileList
 
-    // Создание превью
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setPreviewUrl(reader.result as string);
-    };
-    reader.readAsDataURL(file);
-  };
+  const onSubmit = (data: ImageSchema) => {
+    console.log(data);
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    if (!imageFile) return;
+    const formData = new FormData();
 
-    setIsLoading(true);
+    formData.append("image", data.image[0]);
+    setIsSubmitting(true)
 
-    try {
-      // 1. Создаем FormData и добавляем файл
-      const formData = new FormData();
-      formData.append('image', imageFile);
-
-      // 2. Отправляем запрос без явного Content-Type
-      const response = await fetch('/api/updateUser/updateUserPhoto', {
-        method: 'POST',
-        credentials: 'include',
-        body: formData, // Передаем FormData напрямую
-        // Заголовок Content-Type с boundary установится автоматически
-      });
-
-      if (!response.ok) throw new Error('Upload failed');
-
-      setStatus('success');
-      setNotifOpen(true);
-    } catch (error) {
-      console.error('Upload failed:', error);
-      setStatus('error');
-    } finally {
-      setNotifOpen(true);
-      setIsLoading(false);
-      setPreviewUrl('');
-      const form = e.target as HTMLFormElement;
-      form.reset();
-    }
+    fetch('/api/updateUser/updateUserPhoto', {
+      method: 'POST',
+      body: formData,
+      credentials: 'include',
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("");
+        }
+        dispatch(openNotif({
+          message: 'Успешно изменено',
+          type: 'success',
+          redirectUrl: null,
+        }))
+        setPreviewUrl(null);
+        reset()
+      })
+      .catch((error) => {
+        console.error(error);
+        dispatch(openNotif({
+          message: 'Произошла ошибка. Попробуйте позже',
+          type: 'error',
+          redirectUrl: null,
+        }))
+      })
+      .finally(() => {
+        setIsSubmitting(false)
+      })
   }
+
+  useEffect(() => {
+    (async () => {
+      const image = imageFile?.[0]
+      if (image instanceof File) {
+        const url = await convertToBase64(image)
+        setPreviewUrl(url)
+      }
+    })()
+  }, [imageFile])
 
   return (
     <>
-      <form onSubmit={handleSubmit} className="w-full p-6 bg-primary-800/40 rounded-xl border border-primary-700">
+      <form onSubmit={handleSubmit(onSubmit)} className="w-full p-6 bg-primary-800/40 rounded-xl border border-primary-700">
         <h2 className="text-2xl font-bold text-primary-50 mb-6">Настройка аватара</h2>
 
         <div className="border-2 border-dashed border-primary-600 rounded-xl p-8 text-center
-                     hover:border-accent-300 transition-colors cursor-pointer group"
+                     hover:border-accent-300 transition-colors cursor-pointer"
           onDragOver={(e) => {
             e.preventDefault();
             e.currentTarget.classList.add('border-accent-300');
@@ -92,11 +111,15 @@ export default function AvatarCustomize() {
             e.preventDefault();
             e.currentTarget.classList.remove('border-accent-300');
             if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-              handleFileChange(e.dataTransfer.files[0]);
+              setValue(
+                "image",
+                e.dataTransfer.files,
+                { shouldValidate: true }
+              )
             }
-          }}>
-
-          {previewUrl ? (
+          }}
+        >
+          {(previewUrl && !(errors.image)) ? (
             <div className="mb-4">
               <img
                 src={previewUrl}
@@ -128,36 +151,45 @@ export default function AvatarCustomize() {
             Форматы: JPG, PNG • Макс. размер: 4MB
           </p>
 
+          {errors.image &&
+            <span className="text-red-500 block">{errors.image.message}</span>
+          }
+
           <input
             id="avatar-upload"
             type="file"
             className="hidden"
             accept="image/*"
-            onChange={(e) => {
-              if (e.target.files?.[0]) {
-                handleFileChange(e.target.files[0]);
-              }
-            }}
+            {...register("image")}
           />
         </div>
 
         <div className="mt-6 flex justify-end gap-4">
+          {((imageFile?.[0] instanceof File) && !isSubmitting) &&
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                setPreviewUrl(null);
+                reset()
+              }}
+              className="px-6 py-2 border-accent-300 border rounded-full hover:bg-accent-300 hover:text-white text-accent-300 transition-colors"
+            >Удалить</button>
+          }
           <button
             type="submit"
-            disabled={!imageFile || isLoading}
+            disabled={!(imageFile?.[0] instanceof File) || isSubmitting || Boolean(errors.image)}
             className={`border-2 border-secondary-300 text-secondary-300 px-6 py-2 
                       rounded-full hover:bg-secondary-300 hover:text-white transition-colors
-                      ${(!imageFile || isLoading) ? 'opacity-50 cursor-not-allowed' : ''}`}>
-            {isLoading ? 'Загрузка...' : 'Сохранить изменения'}
+                      ${(!(imageFile?.[0] instanceof File) || isSubmitting || Boolean(errors.image)) ? 'opacity-50 cursor-not-allowed' : ''}`}>
+            {isSubmitting ? 'Загрузка...' : 'Сохранить изменения'}
           </button>
         </div>
-      </form>
-      {notifOpen &&
+      </form >
+      {isOpen &&
         <Notif
-          setOnOpen={setNotifOpen}
-          type={status}
+          type={type}
         >
-          {status === 'success' ? 'Успешно изменено' : 'Ошибка. Проверьте формат и размер файла.'}
+          {message}
         </Notif>
       }
     </>
