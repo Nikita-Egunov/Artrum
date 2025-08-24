@@ -20,12 +20,22 @@ export async function GET() {
     const endIndex = randomAft + 10;
 
     if (endIndex <= afts.length) {
-      return afts.slice(randomAft, endIndex);
+      const dataToSend = afts.slice(randomAft, endIndex);
+      return new Response(JSON.stringify({
+        data: dataToSend.map(({cost, description, id, imageUrl, title}) => ({
+          cost: cost.toString(),
+          description,
+          id,
+          imageUrl,
+          title,
+        }))
+      }))
     } else {
       const firstPart = afts.slice(randomAft);
       const remaining = 10 - firstPart.length;
       const secondPart = afts.slice(0, remaining);
       const dataToSend = firstPart.concat(secondPart)
+
       return new Response(JSON.stringify({
         data: dataToSend.map(({cost, description, id, imageUrl, title}) => ({
           cost: cost.toString(),
@@ -41,7 +51,7 @@ export async function GET() {
         status: 200,
         statusText: "OK",
       })
-    }
+    } 
   } catch (error) {
     console.error(error);
     return new Response("Internal Server Error", {
