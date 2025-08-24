@@ -1,5 +1,6 @@
-import { About, Footer, Header, Hero, Slider } from "@/widgets";
+import { About, Footer, Header, Hero } from "@/widgets";
 import { JSX } from "react";
+import SliderClient from "./sliderClient/sliderClient";
 
 export default function HomePage(): JSX.Element {
   return (
@@ -13,53 +14,7 @@ export default function HomePage(): JSX.Element {
         button2Text="О нас"
         button2Url="/about"
       />
-      <Slider
-        title="Доступные для покупки арты"
-        cards={[
-          {
-            buttonUrl: "/",
-            description: "id этого арта: 777",
-            imageUrl: "/nft.jpg",
-            price: "99$",
-            title: "Title",
-          },
-          {
-            buttonUrl: "/",
-            description: "id этого арта: 777",
-            imageUrl: "/nft.jpg",
-            price: "99$",
-            title: "Title",
-          },
-          {
-            buttonUrl: "/",
-            description: "id этого арта: 777",
-            imageUrl: "/nft.jpg",
-            price: "99$",
-            title: "Title",
-          },
-          {
-            buttonUrl: "/",
-            description: "id этого арта: 777",
-            imageUrl: "/nft.jpg",
-            price: "99$",
-            title: "Title",
-          },
-          {
-            buttonUrl: "/",
-            description: "id этого арта: 777",
-            imageUrl: "/nft.jpg",
-            price: "99$",
-            title: "Title",
-          },
-          {
-            buttonUrl: "/",
-            description: "id этого арта: 777",
-            imageUrl: "/nft.jpg",
-            price: "99$",
-            title: "Title",
-          },
-        ]}
-      />
+      <SliderClient />
       <About
         title="Немного об Artrum"
         description="
@@ -73,54 +28,7 @@ export default function HomePage(): JSX.Element {
         btnText="Хочу знать всё"
       />
       <div className="border-app-dashed border-t">
-        <Slider
-          title="Редкие арты"
-          cards={[
-            {
-              buttonUrl: "/",
-              description: "id этого арта: 777",
-              imageUrl: "/nft.jpg",
-              price: "99$",
-              title: "Title",
-            },
-            {
-              buttonUrl: "/",
-              description: "id этого арта: 777",
-              imageUrl: "/nft.jpg",
-              price: "99$",
-              title: "Title",
-            },
-            {
-              buttonUrl: "/",
-              description: "id этого арта: 777",
-              imageUrl: "/nft.jpg",
-              price: "99$",
-              title: "Title",
-            },
-            {
-              buttonUrl: "/",
-              description: "id этого арта: 777",
-              imageUrl: "/nft.jpg",
-              price: "99$",
-              title: "Title",
-            },
-            {
-              buttonUrl: "/",
-              description: "id этого арта: 777",
-              imageUrl: "/nft.jpg",
-              price: "99$",
-              title: "Title",
-            },
-            {
-              buttonUrl: "/",
-              description: "id этого арта: 777",
-              imageUrl: "/nft.jpg",
-              price: "99$",
-              title: "Title",
-            },
-          ]}
-        />
-
+        <SliderClient />
         <About
           title="Вообще, а зачем это всё?"
           description="Честно, не знаю. Просто мне было в прикол разработать такой сервис где люди могут дарить друг другу цифровые подарки и собирать коллекции вроде бы как NFT, но за меньшие деньги"

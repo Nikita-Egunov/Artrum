@@ -3,17 +3,23 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Card, CardProps } from "../lib";
 
+
 type Props = {
   title: string;
-  cards: CardProps[];
+  cards: CardProps[] | undefined;
+  isLoading: boolean;
+  isSuccess: boolean;
 };
-export default function Slider({ title, cards }: Props) {
+export default function Slider({ title, cards, isLoading, isSuccess }: Props) {
   return (
     <section className="container">
       <h2 className="text-4xl w-fit mx-auto text-center font-bold bg-gradient-to-r from-accent-400 to-secondary-300 bg-clip-text text-transparent mb-8">
         {title}
       </h2>
-      <Swiper
+      {isLoading && <div>
+        <span className="block w-6 h-6 border-b border-l border-primary-400 rounded-full animate-spin mx-auto"></span>
+      </div>}
+      {(isSuccess && cards) && <Swiper
         slidesPerView={4.2}
         spaceBetween={16}
         breakpoints={{
@@ -33,21 +39,22 @@ export default function Slider({ title, cards }: Props) {
       >
         {cards.map(
           (
-            { buttonUrl, description, imageUrl, price, title }: CardProps,
+            { id, description, imageUrl, cost, title }: CardProps,
             index,
           ) => (
             <SwiperSlide key={index}>
               <Card
-                buttonUrl={buttonUrl}
+                id={id}
                 description={description}
                 imageUrl={imageUrl}
-                price={price}
+                cost={cost}
                 title={title}
+
               />
             </SwiperSlide>
           ),
         )}
-      </Swiper>
+      </Swiper>}
     </section>
   );
 }

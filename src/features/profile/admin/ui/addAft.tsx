@@ -53,8 +53,6 @@ export default function AddAft() {
   const imageFile = watch("image") as FileList
 
   const onSubmit = (data: InputSchema) => {
-    console.log(data);
-
     const formData = new FormData();
 
     formData.append("image", data.image[0]);

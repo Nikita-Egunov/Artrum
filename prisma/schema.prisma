@@ -26,5 +26,5 @@ model Aft {
   title       String
   description String
   imageUrl    String
-  cost        Float
+  cost        String
 }
