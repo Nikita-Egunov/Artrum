@@ -20,7 +20,7 @@ export async function verifyAccessToken(req: NextRequest) {
 
 
   if (!isAuthRoute) {
-    return { response: NextResponse.next(), userEmail: null };
+  return { response: NextResponse.next(), userEmail: null };
   }
 
   const isAdminRoute = ADMIN_ROUTES.some(

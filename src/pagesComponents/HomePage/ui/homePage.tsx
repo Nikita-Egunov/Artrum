@@ -14,7 +14,7 @@ export default function HomePage(): JSX.Element {
         button2Text="О нас"
         button2Url="/about"
       />
-      <SliderClient />
+      <SliderClient title="Доступные для покупки арты" />
       <About
         title="Немного об Artrum"
         description="
@@ -28,10 +28,10 @@ export default function HomePage(): JSX.Element {
         btnText="Хочу знать всё"
       />
       <div className="border-app-dashed border-t">
-        <SliderClient />
+        <SliderClient title="Редкие арты" />
         <About
           title="Вообще, а зачем это всё?"
-          description="Честно, не знаю. Просто мне было в прикол разработать такой сервис где люди могут дарить друг другу цифровые подарки и собирать коллекции вроде бы как NFT, но за меньшие деньги"
+          description="Честно, не знаю. Просто прикольно)"
           url="/about"
           imgUrl="/merge.png"
           isWrapped={true}

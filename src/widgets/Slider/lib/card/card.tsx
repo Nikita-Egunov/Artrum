@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -7,6 +8,7 @@ export type CardProps = {
   description: string;
   imageUrl: string;
   cost: string;
+  canBuy?: boolean;
 }
 
 export default function Card({
@@ -14,8 +16,23 @@ export default function Card({
   description,
   cost,
   imageUrl,
-  id
+  id,
+  canBuy = true
 }: CardProps) {
+  const handleClick = async () => {
+    fetch('/api/boughtAft', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ id })
+    }).then((response) => {
+      if (!response.ok) {
+        throw new Error("Ошибка при отправке запроса");
+      }
+    })
+  }
+
   return (
     <div className="rounded-xl border border-gray-700 p-6 shadow-md hover:shadow-lg transition-shadow">
       <div className="aspect-square rounded-lg mb-4">
@@ -33,14 +50,16 @@ export default function Card({
         <p className="text-gray-600 mb-4 line-clamp-3">{description}</p>
 
         <div className="flex justify-between items-center">
-          <span className="text-2xl font-bold text-primary-400">{cost}</span>
-          <Link
-            href={`/aft/${id}`}
-            className="bg-secondary-300 text-white px-6 py-2 rounded-full
-                      hover:bg-secondary-400 transition-colors"
-          >
-            Купить
-          </Link>
+          <span className="text-2xl font-bold text-primary-400">{cost}₽</span>
+          {canBuy &&
+            <button
+              onClick={handleClick}
+              className="bg-secondary-300 text-white px-6 py-2 rounded-full
+          hover:bg-secondary-400 transition-colors"
+            >
+              Купить
+            </button>
+          }
         </div>
       </div>
     </div>

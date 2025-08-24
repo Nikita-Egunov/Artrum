@@ -3,7 +3,7 @@
 import { useGetAftQuery } from "@/shared/redux/apiSlices/getAftSlice";
 import { Slider } from "@/widgets";
 
-export default function SliderClient() {
+export default function SliderClient({ title }: { title: string }) {
   const { isError, isLoading, isSuccess, data } = useGetAftQuery();
 
   return (

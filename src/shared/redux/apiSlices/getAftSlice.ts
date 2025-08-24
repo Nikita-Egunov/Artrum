@@ -16,6 +16,7 @@ export const aftApi = createApi({
   reducerPath: "getAft",
   baseQuery: fetchBaseQuery({
     baseUrl: "/api",
+    credentials: 'include',
     prepareHeaders: (headers) => {
       return headers;
     },
@@ -26,9 +27,14 @@ export const aftApi = createApi({
       query: () => "/getArts",
       providesTags: ["Aft"],
     }),
+    getMasterAft: builder.query<AftType, void>({
+      query: () => "/getMasterAft",
+      providesTags: ["Aft"],
+    })
   })
 })
 
 export const {
   useGetAftQuery,
+  useGetMasterAftQuery,
 } = aftApi;

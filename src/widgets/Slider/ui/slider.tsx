@@ -9,8 +9,9 @@ type Props = {
   cards: CardProps[] | undefined;
   isLoading: boolean;
   isSuccess: boolean;
+  canBuy?: boolean;
 };
-export default function Slider({ title, cards, isLoading, isSuccess }: Props) {
+export default function Slider({ title, cards, isLoading, isSuccess, canBuy = true }: Props) {
   return (
     <section className="container">
       <h2 className="text-4xl w-fit mx-auto text-center font-bold bg-gradient-to-r from-accent-400 to-secondary-300 bg-clip-text text-transparent mb-8">
@@ -49,7 +50,7 @@ export default function Slider({ title, cards, isLoading, isSuccess }: Props) {
                 imageUrl={imageUrl}
                 cost={cost}
                 title={title}
-
+                canBuy={canBuy}
               />
             </SwiperSlide>
           ),
