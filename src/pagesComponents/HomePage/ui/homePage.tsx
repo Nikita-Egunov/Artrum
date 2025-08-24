@@ -10,9 +10,9 @@ export default function HomePage(): JSX.Element {
         h1="Приветствую тебя в своём магазине артов"
         p="Здесь ты можешь купить AFT. Это ценность на этой площадке"
         button1Text="Купить"
-        button1Url="/shop"
+        button1Url="#"
         button2Text="О нас"
-        button2Url="/about"
+        button2Url="#"
       />
       <SliderClient title="Доступные для покупки арты" />
       <About
