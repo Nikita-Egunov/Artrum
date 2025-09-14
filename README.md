@@ -1,36 +1,106 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Artrum
+
+Artrum is a unique platform where you can request and receive digital art pieces. The platform features a collection of available arts that you can request, and a section for rare arts. The project is built using modern web technologies and follows best practices for code organization and maintainability.
+
+## Table of Contents
+
+- [Features](#features)
+- [Technologies](#technologies)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+  - [Running the Application](#running-the-application)
+- [Project Structure](#project-structure)
+- [Contributing](#contributing)
+- [License](#license)
+- [Contact](#contact)
+
+## Features
+
+- Request digital art pieces
+- Browse available and rare arts
+- User authentication and profile management
+- Responsive design with a clean and modern UI
+
+## Technologies
+
+- **Frontend**: React, Next.js, TypeScript, Tailwind CSS
+- **State Management**: Redux Toolkit
+- **Authentication**: JWT, Argon2 for password hashing
+- **Database**: Prisma, SQLite (or other supported databases)
+- **Testing**: Jest, React Testing Library
+- **Linting and Formatting**: ESLint, Prettier
+- **Build Tool**: Next.js with Turbopack
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+Make sure you have the following software installed on your machine:
+
+- Node.js (v18 or later)
+- npm (v8 or later) or yarn (v1.22 or later)
+- Git
+
+### Installation
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/Nikita-Egunov/Artrum.git
+cd Artrum
+```
+
+2. Install the dependencies:
+
+```bash
+npm install
+# or
+yarn install
+```
+
+3. Set up the database:
+
+```bash
+npx prisma migrate deploy
+```
+
+### Running the Application
+
+To run the application in development mode, use the following command:
 
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser to view the application.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The project follows a feature-based folder structure with clear separation of concerns:
 
-## Learn More
+- `src/app/`: Next.js pages and layout
+- `src/features/`: Feature-specific components and logic
+- `src/widgets/`: Reusable UI components
+- `src/shared/`: Shared utilities, components, and configuration
+- `src/utils/`: Helper functions and hooks
+- `src/processes/`: Business logic and processes
+- `prisma/`: Database schema and migrations
 
-To learn more about Next.js, take a look at the following resources:
+## Contributing
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Contributions are welcome! Please read the [CONTRIBUTING.md](CONTRIBUTING.md) file for details on how to contribute to this project.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## License
 
-## Deploy on Vercel
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Contact
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+For any questions or feedback, please open an issue on the [GitHub repository](https://github.com/Nikita-Egunov/Artrum).
+
+---
+
+Demo: [https://artrum.vercel.app/](https://artrum.vercel.app/)
