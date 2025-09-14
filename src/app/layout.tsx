@@ -1,11 +1,7 @@
-
-
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
-import "swiper/css";
 import "./globals.css";
 import StoreProvider from "./providers/StoreProvider";
-
 
 const roboto = Roboto({
   variable: "--font-roboto",
@@ -25,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <StoreProvider>
-      <html lang="ru">
+      <html lang="ru" data-scroll-behavior="smooth">
         <head>
           <link rel="icon.svg" href="/icon" type="image/svg+xml" />
         </head>

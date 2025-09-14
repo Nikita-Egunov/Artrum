@@ -14,7 +14,7 @@ export async function GET(req: NextRequest) {
       return new Response("Unauthorized", {
         status: 401,
         statusText: "Unauthorized",
-      })
+      });
     }
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET) as Token;
@@ -22,26 +22,29 @@ export async function GET(req: NextRequest) {
     const user = await prisma.user.findUnique({
       where: {
         id: decoded.userId,
-      }
-    })
-
-    return new Response(JSON.stringify({
-      avatarUrl: user?.avatarUrl,
-      email: user?.email,
-      name: user?.name,
-      moneyWasted: user?.moneyWasted,
-    }), {
-      headers: {
-        "Content-Type": "application/json",
       },
-      status: 200,
-    })
+    });
+
+    return new Response(
+      JSON.stringify({
+        avatarUrl: user?.avatarUrl,
+        email: user?.email,
+        name: user?.name,
+        moneyWasted: user?.moneyWasted,
+      }),
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        status: 200,
+      },
+    );
   } catch (error) {
-    console.error(error)
+    console.error(error);
 
     return new Response("Internal Error 500", {
       status: 500,
       statusText: "Internal Server Error",
-    })
+    });
   }
 }

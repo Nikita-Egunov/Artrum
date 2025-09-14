@@ -6,7 +6,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/shared/redux";
 
 export default function SignIn() {
-  const { isOpen, message, type } = useSelector((state: RootState) => state.notif);
+  const { isOpen, message, type } = useSelector(
+    (state: RootState) => state.notif,
+  );
   return (
     <section
       data-testid="sign-in-page"
@@ -14,11 +16,7 @@ export default function SignIn() {
     >
       <SignInForm />
 
-      {isOpen &&
-        <Notif type={type}>
-          {message}
-        </Notif>
-      }
+      {isOpen && <Notif type={type}>{message}</Notif>}
     </section>
   );
 }

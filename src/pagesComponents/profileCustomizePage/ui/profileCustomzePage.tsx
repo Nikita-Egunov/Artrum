@@ -1,13 +1,17 @@
-"use server"
+"use server";
 
 import { AddAft } from "@/features";
-import { AvatarCustomize, NameCustomize } from "@/features/profile/ui/customize";
+import {
+  AvatarCustomize,
+  NameCustomize,
+} from "@/features/profile/ui/customize";
 import { getProfile } from "@/utils";
 
 import { cookies } from "next/headers";
 
 import { JSX } from "react";
 import { Header } from "../header";
+import { RequestList } from "@/features/profile/admin";
 
 export default async function ProfileCustomizePage(): Promise<JSX.Element> {
   const cookieStore = await cookies();
@@ -20,13 +24,12 @@ export default async function ProfileCustomizePage(): Promise<JSX.Element> {
       <Header />
       <main className=" px-[10px] mt-[10px]">
         <section className="container base grid grid-cols-2 gap-[10px]">
-
           <AvatarCustomize />
           <NameCustomize />
           {profile?.email === process.env.ADMIN_EMAIL && <AddAft />}
+          {profile?.email === process.env.ADMIN_EMAIL && <RequestList />}
         </section>
       </main>
-      {}
     </>
-  )
+  );
 }

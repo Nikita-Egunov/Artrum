@@ -16,10 +16,9 @@ export default async function refreshAccess(req: NextRequest) {
 
     const refreshResponse = await fetch(refreshRequest);
 
-
     if (refreshResponse.ok) {
       // Создаем ответ и копируем куки из refreshResponse
-      const response = NextResponse.next() as NextResponse<{ status: "OK" }>
+      const response = NextResponse.next() as NextResponse<{ status: "OK" }>;
 
       // Копируем все куки из refresh ответа
       refreshResponse.headers.forEach((value, key) => {

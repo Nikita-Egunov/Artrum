@@ -19,7 +19,7 @@ notifListenerMiddleware.startListening.withTypes<RootState, AppDispatch>()({
         console.error("Error redirecting:", error);
       }
     }
-  }
+  },
 });
 
 export const { middleware } = notifListenerMiddleware;

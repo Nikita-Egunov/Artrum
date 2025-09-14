@@ -10,4 +10,4 @@ export {
 } from "./redux";
 export type { Token };
 export { prisma };
-export { useGetProfileQuery }
+export { useGetProfileQuery };

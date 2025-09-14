@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useGetAftQuery } from "@/shared/redux/apiSlices/getAftSlice";
 import { Slider } from "@/widgets";
@@ -8,10 +8,10 @@ export default function SliderClient({ title }: { title: string }) {
 
   return (
     <Slider
-      title="Доступные для покупки арты"
+      title={title}
       isLoading={isLoading}
       isSuccess={isSuccess}
       cards={data?.data}
     />
-  )
+  );
 }

@@ -11,7 +11,7 @@ export type { Data };
 export type { Token, RefreshToken };
 export { isVerified };
 export { getProfile };
-export { useProfile }
-export { refreshAccess }
-export { regexes }
-export { convertToBase64 }
+export { useProfile };
+export { refreshAccess };
+export { regexes };
+export { convertToBase64 };

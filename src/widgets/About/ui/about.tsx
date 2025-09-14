@@ -19,7 +19,7 @@ export default function About({
   isWrapped = false,
 }: Props) {
   return (
-    <section className="container">
+    <section id="about" className="container">
       <div className="">
         <div className="px-6 py-20">
           <div
@@ -47,14 +47,14 @@ export default function About({
                 {title}
               </h2>
               <p className="text-lg leading-relaxed">{description}</p>
-              <Link
+              {/* <Link
                 href={url}
                 className="border-2 border-secondary-300 text-secondary-300 
                           px-8 py-3 rounded-full hover:bg-secondary-300 
                           hover:text-white transition-colors"
               >
                 {btnText}
-              </Link>
+              </Link> */}
             </div>
           </div>
         </div>

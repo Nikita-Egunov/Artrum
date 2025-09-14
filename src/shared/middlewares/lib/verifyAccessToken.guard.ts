@@ -18,9 +18,8 @@ export async function verifyAccessToken(req: NextRequest) {
     (route) => pathname === route || pathname.startsWith(route + "/"),
   );
 
-
   if (!isAuthRoute) {
-  return { response: NextResponse.next(), userEmail: null };
+    return { response: NextResponse.next(), userEmail: null };
   }
 
   const isAdminRoute = ADMIN_ROUTES.some(
@@ -29,14 +28,16 @@ export async function verifyAccessToken(req: NextRequest) {
 
   try {
     if (!refreshToken || !process.env.JWT_SECRET) {
-      throw new Error("process.env.JWT_SECRET or process.env.REFRESH_SECRET not configured");
+      throw new Error(
+        "process.env.JWT_SECRET or process.env.REFRESH_SECRET not configured",
+      );
     }
 
     const refreshTokenObject = await jwtVerify(
       refreshToken,
       new TextEncoder().encode(process.env.JWT_SECRET),
       { algorithms: ["HS256"] },
-    )
+    );
 
     if (
       !refreshTokenObject.payload.userEmail ||
@@ -46,7 +47,7 @@ export async function verifyAccessToken(req: NextRequest) {
     }
 
     if (isAdminRoute) {
-      console.log('amin route');
+      console.log("amin route");
 
       const userEmail = refreshTokenObject.payload.userEmail;
 
@@ -89,11 +90,11 @@ export async function verifyAccessToken(req: NextRequest) {
 
     // 3. Попытка обновить токен
     if (refreshToken) {
-      console.log('try to refresh token');
+      console.log("try to refresh token");
 
       const refreshAccessResponse = await refreshAccess(req);
       if (refreshAccessResponse) {
-        return refreshAccessResponse
+        return refreshAccessResponse;
       }
     }
 

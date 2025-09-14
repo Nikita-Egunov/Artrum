@@ -1,11 +1,10 @@
-"use client"
+"use client";
 
 import notifReducer from "./slices/notifSlice";
 import { configureStore, createSlice, EnhancedStore } from "@reduxjs/toolkit";
 import { profileApi } from "./apiSlices/profileSlice";
 import { middleware as notifMiddleware } from "./middelwares/notifMidelware";
 import { aftApi } from "./apiSlices/getAftSlice";
-
 
 export const makeStore = () => {
   return configureStore({
@@ -16,18 +15,12 @@ export const makeStore = () => {
     },
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware()
-        .concat(
-          profileApi.middleware,
-        )
-        .concat(
-          aftApi.middleware,
-        )
-        .prepend(
-          notifMiddleware
-        )
+        .concat(profileApi.middleware)
+        .concat(aftApi.middleware)
+        .prepend(notifMiddleware),
     // другие middleware...
   });
-}
+};
 
 // Infer the type of makeStore
 export type AppStore = ReturnType<typeof makeStore>;

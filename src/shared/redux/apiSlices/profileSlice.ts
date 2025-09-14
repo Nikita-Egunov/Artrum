@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { User } from "@prisma/client";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"; // ← Исправлен импорт
 
@@ -11,11 +11,12 @@ export const profileApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ['Profile'], // ← Добавлены теги для инвалидации кэша
+  tagTypes: ["Profile"], // ← Добавлены теги для инвалидации кэша
   endpoints: (builder) => ({
-    getProfile: builder.query<User, void>({ // ← Исправлен тип параметра
-      query: () => '/getUser',
-      providesTags: ['Profile'], // ← Добавлен тег
+    getProfile: builder.query<User, void>({
+      // ← Исправлен тип параметра
+      query: () => "/getUser",
+      providesTags: ["Profile"], // ← Добавлен тег
     }),
   }),
 });

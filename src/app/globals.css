@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "tailwind-scrollbar";
 
 @theme {
   /* fonts */
@@ -63,8 +64,14 @@
 }
 
 @layer base {
+  @import "swiper/css";
+
   .border-app-dashed {
     @apply border-dashed border-gray-500;
+  }
+
+  html {
+    scroll-behavior: smooth;
   }
 
   body {
@@ -89,5 +96,11 @@
 
   button {
     @apply cursor-pointer;
+  }
+}
+
+@layer components {
+  .swiper-slide {
+    height: auto;
   }
 }

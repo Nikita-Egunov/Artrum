@@ -1,3 +1,3 @@
 import ClientSlider from "./ui/clientSlider";
 
-export { ClientSlider }
+export { ClientSlider };

@@ -11,9 +11,9 @@ export default async function getProfile(refreshToken: string | undefined) {
       throw new Error("process.env.JWT_SECRET || !refreshToken");
     }
 
-    const decoded = jwt.decode(refreshToken) as RefreshToken
+    const decoded = jwt.decode(refreshToken) as RefreshToken;
 
-    if (decoded.type !== "refresh"|| !decoded.userEmail) {
+    if (decoded.type !== "refresh" || !decoded.userEmail) {
       throw new Error('decoded.type !== "refresh"|| !decoded.userEmail');
     }
 
@@ -27,8 +27,8 @@ export default async function getProfile(refreshToken: string | undefined) {
       throw new Error("User not found");
     }
 
-    return user as User
+    return user as User;
   } catch (error) {
-    console.error(error)
+    console.error(error);
   }
 }

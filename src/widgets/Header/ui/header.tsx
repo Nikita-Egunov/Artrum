@@ -6,10 +6,9 @@ import { User } from "@prisma/client";
 
 export default async function Header() {
   const cookieStore = await cookies();
-  const refreshToken = cookieStore.get("refreshToken")?.value
+  const refreshToken = cookieStore.get("refreshToken")?.value;
 
   const user = await getProfile(refreshToken);
-
 
   return (
     <header className="z-40 artrum-gradient-300 py-4 shadow-lg absolute top-0 left-0 w-full">

@@ -5,7 +5,6 @@ import { cookies } from "next/headers";
 
 export async function POST(req: Request) {
   try {
-
     const cookieStore = await cookies();
     const formData = await req.json();
     const { email, password } = formData;
@@ -78,7 +77,7 @@ export async function POST(req: Request) {
       httpOnly: true,
       maxAge: 60 * 15,
       sameSite: "lax",
-      secure: process.env.NODE_ENV === 'production',
+      secure: process.env.NODE_ENV === "production",
       path: "/",
     });
 
@@ -88,7 +87,7 @@ export async function POST(req: Request) {
       httpOnly: true,
       maxAge: 60 * 60 * 24 * 7,
       path: "/",
-      secure: process.env.NODE_ENV === 'production',
+      secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
     });
 

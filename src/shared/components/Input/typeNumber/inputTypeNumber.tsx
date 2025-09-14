@@ -1,4 +1,4 @@
-import React, { forwardRef, useState, useCallback } from 'react';
+import React, { forwardRef, useState, useCallback } from "react";
 
 interface NumberInputProps {
   name: string;
@@ -11,8 +11,8 @@ interface NumberInputProps {
   step?: number;
   disabled?: boolean;
   className?: string;
-  size?: 'sm' | 'md' | 'lg';
-  variant?: 'default' | 'outline' | 'filled';
+  size?: "sm" | "md" | "lg";
+  variant?: "default" | "outline" | "filled";
   showSteppers?: boolean;
   error?: boolean;
   errorMessage?: string;
@@ -25,23 +25,23 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
       value,
       defaultValue,
       onChange,
-      placeholder = 'Введите число',
+      placeholder = "Введите число",
       min = 0,
       max,
       step = 1,
       disabled = false,
-      className = '',
-      size = 'md',
-      variant = 'default',
+      className = "",
+      size = "md",
+      variant = "default",
       showSteppers = true,
       error = false,
       errorMessage,
       ...props
     },
-    ref
+    ref,
   ) => {
     const [internalValue, setInternalValue] = useState<string>(
-      defaultValue?.toString() || value?.toString() || ''
+      defaultValue?.toString() || value?.toString() || "",
     );
 
     const handleChange = useCallback(
@@ -49,7 +49,7 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
         const newValue = e.target.value;
         setInternalValue(newValue);
 
-        if (newValue === '') {
+        if (newValue === "") {
           onChange?.(NaN);
           return;
         }
@@ -59,13 +59,13 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
           onChange?.(numValue);
         }
       },
-      [onChange]
+      [onChange],
     );
 
     const handleStep = useCallback(
-      (direction: 'up' | 'down') => {
+      (direction: "up" | "down") => {
         const currentValue = parseFloat(internalValue) || min;
-        let newValue = currentValue + (direction === 'up' ? step : -step);
+        let newValue = currentValue + (direction === "up" ? step : -step);
 
         if (min !== undefined && newValue < min) newValue = min;
         if (max !== undefined && newValue > max) newValue = max;
@@ -73,11 +73,11 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
         setInternalValue(newValue.toString());
         onChange?.(newValue);
       },
-      [internalValue, min, max, step, onChange]
+      [internalValue, min, max, step, onChange],
     );
 
     const handleBlur = useCallback(() => {
-      if (internalValue === '') return;
+      if (internalValue === "") return;
 
       const numValue = parseFloat(internalValue);
       if (isNaN(numValue)) {
@@ -97,15 +97,15 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
     }, [internalValue, min, max, onChange]);
 
     const sizeClasses = {
-      sm: 'h-8 text-sm',
-      md: 'h-10 text-base',
-      lg: 'h-12 text-lg'
+      sm: "h-8 text-sm",
+      md: "h-10 text-base",
+      lg: "h-12 text-lg",
     };
 
     const variantClasses = {
-      default: 'bg-primary-900 border-primary-600 focus:border-accent-300',
-      outline: 'bg-transparent border-primary-600 focus:border-accent-300',
-      filled: 'bg-primary-800 border-transparent focus:bg-primary-700'
+      default: "bg-primary-900 border-primary-600 focus:border-accent-300",
+      outline: "bg-transparent border-primary-600 focus:border-accent-300",
+      filled: "bg-primary-800 border-transparent focus:bg-primary-700",
     };
 
     const baseClasses = `
@@ -115,7 +115,7 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
       placeholder:text-primary-400
       ${sizeClasses[size]}
       ${variantClasses[variant]}
-      ${error ? 'border-red-500 focus:ring-red-300' : ''}
+      ${error ? "border-red-500 focus:ring-red-300" : ""}
     `;
 
     return (
@@ -124,7 +124,7 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
           <input
             ref={ref}
             name={name}
-            type='text'
+            type="text"
             value={internalValue}
             onChange={handleChange}
             onBlur={handleBlur}
@@ -133,7 +133,7 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
             max={max}
             step={step}
             disabled={disabled}
-            className={`${baseClasses} ${showSteppers ? 'pr-12' : ''} ${className}`}
+            className={`${baseClasses} ${showSteppers ? "pr-12" : ""} ${className}`}
             {...props}
           />
 
@@ -141,16 +141,22 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
             <div className="absolute right-1 flex space-x-1 text-xl">
               <button
                 type="button"
-                onClick={() => handleStep('up')}
-                disabled={disabled || (max !== undefined && parseFloat(internalValue || '0') >= max)}
+                onClick={() => handleStep("up")}
+                disabled={
+                  disabled ||
+                  (max !== undefined && parseFloat(internalValue || "0") >= max)
+                }
                 className="p-2 rounded-md hover:bg-primary-700 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
               >
                 +
               </button>
               <button
                 type="button"
-                onClick={() => handleStep('down')}
-                disabled={disabled || (min !== undefined && parseFloat(internalValue || '0') <= min)}
+                onClick={() => handleStep("down")}
+                disabled={
+                  disabled ||
+                  (min !== undefined && parseFloat(internalValue || "0") <= min)
+                }
                 className="p-2 rounded-md hover:bg-primary-700 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
               >
                 -
@@ -164,9 +170,9 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
         )}
       </div>
     );
-  }
+  },
 );
 
-NumberInput.displayName = 'NumberInput';
+NumberInput.displayName = "NumberInput";
 
 export default NumberInput;

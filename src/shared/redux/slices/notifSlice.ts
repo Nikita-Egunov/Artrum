@@ -6,14 +6,14 @@ type NotifState = {
   message: string;
   type: "success" | "error" | "warning" | "info";
   redirectUrl: string | null; // добавляем поле для хранения URL
-}
+};
 
 // Тип для payload действия openNotif
 type OpenNotifPayload = {
   message: string;
   type: "success" | "error" | "warning" | "info";
   redirectUrl: string | null;
-}
+};
 
 // Начальное состояние
 const initialState: NotifState = {
@@ -39,7 +39,7 @@ export const notifSlice = createSlice({
       state.type = "info";
       state.redirectUrl = null; // сбрасываем URL
     },
-  }
+  },
 });
 
 // Экспорт действий

@@ -27,7 +27,6 @@ export async function POST(req: Request) {
       );
     }
 
-
     // 3. Поиск пользователя
     const user = await prisma.user.findUnique({
       where: { email: decoded.userEmail },
@@ -48,7 +47,7 @@ export async function POST(req: Request) {
       data: {
         refreshToken: newRefreshToken,
       },
-    })
+    });
 
     // 5. Создаем ответ с куками
     const response = NextResponse.json({ status: "OK" }, { status: 200 });
@@ -90,15 +89,23 @@ function getCookieValue(cookieHeader: string, name: string) {
   return match ? match[2] : null;
 }
 
-function generateToken(userIndemnificator: string | number, type: 'access' | 'refresh', expiresIn: string) {
+function generateToken(
+  userIndemnificator: string | number,
+  type: "access" | "refresh",
+  expiresIn: string,
+) {
   if (!process.env.JWT_SECRET) {
     throw new Error("JWT_SECRET is not defined");
   }
-  const userSomething = type === 'access' ? 'userId' : 'userEmail'
-  const jwtSign = jwt.sign({ [userSomething]: userIndemnificator, type }, process.env.JWT_SECRET, {
-    expiresIn,
-    algorithm: "HS256",
-  } as jwt.SignOptions);
+  const userSomething = type === "access" ? "userId" : "userEmail";
+  const jwtSign = jwt.sign(
+    { [userSomething]: userIndemnificator, type },
+    process.env.JWT_SECRET,
+    {
+      expiresIn,
+      algorithm: "HS256",
+    } as jwt.SignOptions,
+  );
 
   return jwtSign;
 }

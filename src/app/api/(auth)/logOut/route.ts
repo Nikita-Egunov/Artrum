@@ -13,7 +13,7 @@ export async function GET() {
       return new Response("Unauthorized", {
         status: 401,
         statusText: "Unauthorized",
-      })
+      });
     }
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET) as Token;
@@ -23,9 +23,9 @@ export async function GET() {
         id: decoded.userId,
       },
       data: {
-        refreshToken: '',
-      }
-    })
+        refreshToken: "",
+      },
+    });
 
     coocieStore.delete("token");
     coocieStore.delete("refreshToken");
@@ -33,12 +33,12 @@ export async function GET() {
     return new Response("OK", {
       status: 200,
       statusText: "OK",
-    })
+    });
   } catch (error) {
     console.log(error);
     return new Response("Internal Server Error", {
       status: 500,
       statusText: "Internal Server Error",
-    })
+    });
   }
 }

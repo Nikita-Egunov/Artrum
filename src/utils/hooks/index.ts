@@ -4,4 +4,4 @@ import type { Data } from "./useValidate/useValidate";
 
 export { useValidate };
 export type { Data };
-export { useProfile }
+export { useProfile };

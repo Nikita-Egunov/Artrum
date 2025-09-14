@@ -61,7 +61,7 @@ export async function POST(req: Request) {
       process.env.JWT_SECRET,
       {
         algorithm: "HS256",
-        expiresIn: '7d',
+        expiresIn: "7d",
       },
     );
     const newUser: User = await prisma.user.create({
@@ -85,7 +85,7 @@ export async function POST(req: Request) {
       httpOnly: true,
       maxAge: 15 * 60,
       sameSite: "lax",
-      secure: process.env.NODE_ENV === 'production',
+      secure: process.env.NODE_ENV === "production",
       path: "/",
     });
 
@@ -95,7 +95,7 @@ export async function POST(req: Request) {
       httpOnly: true,
       maxAge: 60 * 60 * 24 * 7,
       path: "/",
-      secure: process.env.NODE_ENV === 'production',
+      secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
     });
 
@@ -104,11 +104,14 @@ export async function POST(req: Request) {
     });
   } catch (error) {
     console.error(error);
-    return new Response(JSON.stringify({
-      error
-    }), {
-      status: 500,
-      statusText: "Internal Server Error",
-    });
+    return new Response(
+      JSON.stringify({
+        error,
+      }),
+      {
+        status: 500,
+        statusText: "Internal Server Error",
+      },
+    );
   }
 }

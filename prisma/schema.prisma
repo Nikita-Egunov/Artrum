@@ -9,22 +9,37 @@ generator client {
 }
 
 model User {
-  id           Int     @id @unique @default(autoincrement())
-  email        String  @unique
+  id           Int       @id @unique @default(autoincrement())
+  email        String    @unique
   password     String
   refreshToken String
-  moneyWasted  Int     @default(0)
+  moneyWasted  Int       @default(0)
   name         String?
-  avatarUrl    String? @default("/nft.jpg")
+  avatarUrl    String?   @default("/nft.jpg")
   afts         Aft[]
+  Request      Request[] @relation(name: "RequestFrom")
 }
 
 model Aft {
-  id          Int    @unique @default(autoincrement())
+  id          Int       @id @unique @default(autoincrement())
   masterId    Int?
-  master      User?  @relation(fields: [masterId], references: [id])
+  master      User?     @relation(fields: [masterId], references: [id])
   title       String
   description String
   imageUrl    String
-  cost        String
+  Request     Request[]
+}
+
+model Request {
+  id            Int     @id @unique @default(autoincrement())
+  aftId         Int
+  fromId        Int
+  awaitsApprove Boolean @default(true)
+  approved      Boolean @default(false)
+
+  // Добавьте relations
+  aft  Aft  @relation(fields: [aftId], references: [id])
+  from User @relation(fields: [fromId], references: [id], name: "RequestFrom")
+
+  @@map("Request")
 }

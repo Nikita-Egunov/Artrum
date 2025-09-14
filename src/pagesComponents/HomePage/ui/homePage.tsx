@@ -7,21 +7,19 @@ export default function HomePage(): JSX.Element {
     <>
       <Header />
       <Hero
-        h1="Приветствую тебя в своём магазине артов"
-        p="Здесь ты можешь купить AFT. Это ценность на этой площадке"
-        button1Text="Купить"
-        button1Url="#"
-        button2Text="О нас"
-        button2Url="#"
+        h1="Приветствую тебя в своей сокровищнице артов"
+        p="Здесь ты можешь попросить AFT. А я возможно подарю их тебе)"
+        button1Text="Попросить"
+        button1Url="#ask-art"
+        button2Text="Об этом всём"
+        button2Url="#about"
       />
-      <SliderClient title="Доступные для покупки арты" />
+      <SliderClient title="Доступные для просьбы арты" />
       <About
         title="Немного об Artrum"
         description="
-          Эта старнная площадка была создана для того чтобы продавать арты. 
-          Т.е. вы покупаете id фотографии из моей базы данных.
+          Эта старнная площадка была создана для того чтобы дарить арты. 
           Всё)
-          Возможно кто то захочет его купить, возможно и нет. 
         "
         url="/about"
         imgUrl="/theRiachestNft.jpg"
@@ -32,7 +30,7 @@ export default function HomePage(): JSX.Element {
         <About
           title="Вообще, а зачем это всё?"
           description="Честно, не знаю. Просто прикольно)"
-          url="/about"
+          url="#"
           imgUrl="/merge.png"
           isWrapped={true}
           btnText="Хочу знать всё"

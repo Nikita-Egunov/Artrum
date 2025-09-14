@@ -11,7 +11,7 @@ export async function GET(req: Request) {
       return new Response("Unauthorized", {
         status: 401,
         statusText: "Unauthorized",
-      })
+      });
     }
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET) as Token;
@@ -20,64 +20,69 @@ export async function GET(req: Request) {
       return new Response("Unauthorized", {
         status: 401,
         statusText: "Unauthorized",
-      })
+      });
     }
 
     if (!decoded.userId) {
       return new Response("Unauthorized", {
         status: 401,
         statusText: "Unauthorized",
-      })
+      });
     }
 
     const user = await prisma.user.findUnique({
       where: {
         id: decoded.userId,
-      }
-    })
+      },
+    });
 
     if (!user) {
       return new Response("Unauthorized", {
         status: 401,
         statusText: "Unauthorized",
-      })
+      });
     }
 
     const arts = await prisma.aft.findMany({
       where: {
-        masterId: user.id
-      }
-    })
+        masterId: user.id,
+      },
+    });
 
     if (arts.length > 0) {
-      return new Response(JSON.stringify({
-        data: arts.map(({ cost, description, id, imageUrl }) => ({
-          cost,
-          description,
-          id,
-          imageUrl,
-        }))
-      }), {
-        headers: {
-          "Content-Type": "application/json",
+      return new Response(
+        JSON.stringify({
+          data: arts.map(({ description, id, imageUrl, title }) => ({
+            title,
+            description,
+            id,
+            imageUrl,
+          })),
+        }),
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          status: 200,
+          statusText: "OK",
         },
-        status: 200,
-        statusText: "OK",
-      })
+      );
     }
 
     if (arts.length === 0) {
-      return new Response(JSON.stringify({
-        data: []
-      }), {
-        headers: {
-          "Content-Type": "application/json",
+      return new Response(
+        JSON.stringify({
+          data: [],
+        }),
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          status: 200,
+          statusText: "OK",
         },
-        status: 200,
-        statusText: "OK",
-      })
+      );
     }
-
   } catch (error) {
     console.error(error);
   }

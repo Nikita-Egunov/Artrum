@@ -1,14 +1,14 @@
-import { HTMLInputAutoCompleteAttribute, useState } from "react"
+import { HTMLInputAutoCompleteAttribute, useState } from "react";
 
 type Props = {
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void,
-  onBlur?: (e: React.ChangeEvent<HTMLInputElement>) => void
-  autoComplete: HTMLInputAutoCompleteAttribute
-  name: string,
-  placeholder: string
-  labelTitle: string
-  required?: boolean
-}
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onBlur?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  autoComplete: HTMLInputAutoCompleteAttribute;
+  name: string;
+  placeholder: string;
+  labelTitle: string;
+  required?: boolean;
+};
 
 export default function PasswordInput({
   onChange,
@@ -17,10 +17,9 @@ export default function PasswordInput({
   name,
   placeholder,
   labelTitle,
-  required = true
+  required = true,
 }: Props) {
-
-  const [visible, setVisible] = useState(false)
+  const [visible, setVisible] = useState(false);
   return (
     <div className="relative">
       <label className="block text-primary-100 text-sm mb-2">
@@ -36,9 +35,7 @@ export default function PasswordInput({
         onBlur={onBlur}
         name={name}
         required={required}
-        autoComplete={
-          autoComplete
-        }
+        autoComplete={autoComplete}
       />
       <div
         onClick={() => {
@@ -70,5 +67,5 @@ export default function PasswordInput({
       </div>
       <span className="mt-[10px] hidden text-red-600"></span>
     </div>
-  )
+  );
 }
